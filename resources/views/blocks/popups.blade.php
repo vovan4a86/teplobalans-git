@@ -1,110 +1,124 @@
+<form class="popup" id="request" action="/" style="display: none">
+    <input type="hidden" name="service" data-service-field>
+    <div class="popup__container">
+        <div class="popup__heading">
+            <div class="popup__title">Вопрос специалисту</div>
+            <div class="popup__text">Опишите суть задачи, и мы её решим! Для оперативной работы, вы можете дополнительно оставить телефонный номер.</div>
+        </div>
+        <div class="popup__fields">
+            <div class="popup__cols">
+                <label class="user-input">
+                    <input class="user-input__field" type="text" name="name" required>
+                    <span class="user-input__label">Имя</span>
+                </label>
+                <label class="user-input">
+                    <input class="user-input__field" type="tel" name="phone" required>
+                    <span class="user-input__label">Номер телефона</span>
+                </label>
+            </div>
+            <div class="popup__row">
+                <label class="user-input">
+                    <textarea class="user-input__field" rows="2" required></textarea>
+                    <span class="user-input__label">Ваше сообщение</span>
+                </label>
+            </div>
+        </div>
+        <div class="popup__actions">
+            <button class="btn btn-reset" name="submit" aria-label="Отправить вопрос">
+                <span>Отправить вопрос</span>
+            </button>
+        </div>
+        <div class="popup__policy">Отправляя форму, Вы соглашаетесь с
+            <a href="javascript:void(0)">политикой конфиденциальности</a>
+        </div>
+    </div>
+</form>
+<form class="popup" id="vacancy" action="/" style="display: none">
+    <input type="hidden" name="service" data-service-field>
+    <div class="popup__container">
+        <div class="popup__heading">
+            <div class="popup__title">Интересная вакансия?</div>
+            <div class="popup__text"></div>
+        </div>
+        <div class="popup__fields">
+            <div class="popup__cols">
+                <label class="user-input">
+                    <input class="user-input__field" type="text" name="name" required>
+                    <span class="user-input__label">Имя</span>
+                </label>
+                <label class="user-input">
+                    <input class="user-input__field" type="tel" name="phone" required>
+                    <span class="user-input__label">Номер телефона</span>
+                </label>
+            </div>
+            <div class="popup__row">
+                <label class="user-input">
+                    <textarea class="user-input__field" rows="2" required></textarea>
+                    <span class="user-input__label">Ваше сообщение</span>
+                </label>
+            </div>
+            <div class="popup__row">
+                <label class="upload">
+                    <span class="upload__name">Приложить резюме</span>
+                    <input type="file" name="file" accept=".jpg, .jpeg, .png, .pdf, .doc, .docs, .xls, .xlsx">
+                </label>
+            </div>
+        </div>
+        <div class="popup__actions">
+            <button class="btn btn-reset" name="submit" aria-label="Отправить отклик">
+                <span>Отправить отклик</span>
+            </button>
+        </div>
+        <div class="popup__policy">Отправляя форму, Вы соглашаетесь с
+            <a href="javascript:void(0)">политикой конфиденциальности</a>
+        </div>
+    </div>
+</form>
+<form class="popup" id="project" action="/" style="display: none">
+    <div class="popup__container">
+        <div class="popup__heading">
+            <div class="popup__title">Расскажите о проекте</div>
+            <div class="popup__text">Пожалуйста, опишите задачу по предстоящему проекту, или приложите техническое задание</div>
+        </div>
+        <div class="popup__fields">
+            <div class="popup__cols">
+                <label class="user-input">
+                    <input class="user-input__field" type="text" name="name" required>
+                    <span class="user-input__label">Имя</span>
+                </label>
+                <label class="user-input">
+                    <input class="user-input__field" type="tel" name="phone" required>
+                    <span class="user-input__label">Номер телефона</span>
+                </label>
+            </div>
+            <div class="popup__row">
+                <label class="user-input">
+                    <textarea class="user-input__field" rows="2" required></textarea>
+                    <span class="user-input__label">Ваше сообщение</span>
+                </label>
+            </div>
+            <div class="popup__row">
+                <label class="upload">
+                    <span class="upload__name">Приложить ТЗ</span>
+                    <input type="file" name="file" accept=".jpg, .jpeg, .png, .pdf, .doc, .docs, .xls, .xlsx">
+                </label>
+            </div>
+        </div>
+        <div class="popup__actions">
+            <button class="btn btn-reset" name="submit" aria-label="Отправить">
+                <span>Отправить</span>
+            </button>
+        </div>
+        <div class="popup__policy">Отправляя форму, Вы соглашаетесь с
+            <a href="javascript:void(0)">политикой конфиденциальности</a>
+        </div>
+    </div>
+</form>
 <div class="popup" id="request-done" style="display: none">
     <div class="popup__container">
         <div class="popup__heading">
-            <div class="popup__title">Спасибо за заявку!</div>
-            <div class="popup__text">Мы свяжемся с вами в скором времени!</div>
+            <div class="popup__title">Ваше сообщение успешно отправлено!</div>
+            <div class="popup__text">Мы свяжемся с вами в ближайшее время!</div>
         </div>
     </div>
-</div>
-<form class="popup" id="callback" action="#" style="display: none">
-    <div class="popup__container">callback</div>
-</form>
-<div class="popup" id="request" style="display: none">
-    <div class="popup__container">
-        <div class="popup__heading">
-            <div class="popup__title">Отправить заявку</div>
-            <div class="popup__text">Оставьте заявку на сайте или звоните, чтобы оформить заказ. Согласуем условия доставки, рассчитаем цены и ответим на ваши вопросы.</div>
-        </div>
-        <div class="popup__body">
-            <form class="form" id="product-request" action="{{ route('ajax.product-request') }}">
-                <input type="hidden" name="product" data-product-field>
-                <div class="form__fields">
-                    <div class="form__col">
-                        <input class="input" type="text" name="name" placeholder="Ваше имя*" required>
-                    </div>
-                    <div class="form__col">
-                        <input class="input" type="tel" name="phone" placeholder="+7 (___) ___-__-__*" required>
-                    </div>
-                    <div class="form__row">
-                        <textarea class="input input--text" name="text" placeholder="Сообщение" rows="7"></textarea>
-                    </div>
-                </div>
-                <div class="form__actions">
-                    <div class="form__fields">
-                        <div class="form__col">
-                            <label class="upload">
-                                <span class="upload__name">Загрузить чертёж</span>
-                                <input type="file" name="file" accept=".jpg, .jpeg, .png, .pdf, .doc, .docs, .xls, .xlsx">
-                            </label>
-                        </div>
-                        <div class="form__col">
-                            <button class="btn btn-reset" name="submit" aria-label="Отправить">
-                                <span>Отправить</span>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" d="M3.333 10h11M13.333 13l3-3-3-3" />
-                                </svg>
-                            </button>
-                        </div>
-                        <div class="form__row">
-                            <div class="form__policy">Нажимая на кнопку вы соглашаетесь с
-                                <a href="{{ route('policy') }}">Политикой конфиденциальности</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-<div class="popup" id="counselling" style="display: none">
-    <div class="popup__container">
-        <div class="popup__heading">
-            <div class="popup__title">Консультация</div>
-            <div class="popup__text">Задайте нам вопрос на сайте или звоните. Согласуем условия доставки, рассчитаем цены и ответим на ваши вопросы.</div>
-        </div>
-        <div class="popup__body">
-            <form class="form" id="consultation" action="{{ route('ajax.consultation') }}">
-                <input type="hidden" name="product" data-product-field>
-                <div class="form__fields">
-                    <div class="form__col">
-                        <input class="input" type="text" name="name" placeholder="Ваше имя*" required>
-                    </div>
-                    <div class="form__col">
-                        <input class="input" type="tel" name="phone" placeholder="+7 (___) ___-__-__*" required>
-                    </div>
-                    <div class="form__row">
-                        <textarea class="input input--text" name="text" placeholder="Сообщение" rows="7"></textarea>
-                    </div>
-                </div>
-                <div class="form__actions">
-                    <div class="form__fields">
-                        <div class="form__col">
-                            <label class="upload">
-                                <span class="upload__name">Загрузить чертёж</span>
-                                <input type="file" name="file" accept=".jpg, .jpeg, .png, .pdf, .doc, .docs, .xls, .xlsx">
-                            </label>
-                        </div>
-                        <div class="form__col">
-                            <button class="btn btn-reset" name="submit" aria-label="Отправить">
-                                <span>Отправить</span>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" d="M3.333 10h11M13.333 13l3-3-3-3" />
-                                </svg>
-                            </button>
-                        </div>
-                        <div class="form__row">
-                            <div class="form__policy">Нажимая на кнопку вы соглашаетесь с
-                                <a href="{{ route('policy') }}">Политикой конфиденциальности</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-<div class="scrolltop" aria-label="В начало страницы" tabindex="1">
-    <svg class="svg-sprite-icon icon-up" width="1em" height="1em">
-        <use xlink:href="/static/images/sprite/symbol/sprite.svg#up"></use>
-    </svg>
 </div>
