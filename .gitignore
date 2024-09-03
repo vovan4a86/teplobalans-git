@@ -1,0 +1,17 @@
+# Project exclude paths
+/vendor
+/node_modules
+/public/thumbs/
+/public/uploads/
+/public/test/
+/public/data-site/
+/public/sitemap.xml
+/public/sitemaps/*
+.env
+.idea/
+.yarn
+/storage/logs/*.log
+
+# Project exclude paths
+/storage/debugbar/
+/storage/

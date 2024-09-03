@@ -1,0 +1,12 @@
+import './lazyLoading';
+import './light-validation';
+import './popups';
+import './tables';
+import './truncateText.js';
+import './burgerMenu';
+// import './sliders';
+import './map';
+import './tabs';
+import './fileUpload';
+// import './sliders';
+import './customFront';
