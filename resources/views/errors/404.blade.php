@@ -1,19 +1,18 @@
-@extends('template_error')
+@extends('template')
 @section('content')
-    <main>
-        <div class="error-view">
-            <div class="error-view__container container">
-                <div class="error-view__body">
-                    <img class="error-view__pic no-select" src="/static/images/common/error-view.png"
-                         width="503" height="204" alt="error_image">
-                    <div class="error-view__title">Страница не найдена</div>
-                    <a class="btn btn--white" href="{{ route('main') }}">
-                        <span>Перейти на главную</span>
-                    </a>
-                </div>
-                <img class="error-view__map no-select" src="/static/images/common/map.svg"
-                     width="1318" height="783" alt="map_image">
+    <div class="error-view">
+        <div class="error-view__container container">
+            <div class="error-view__view lazy" data-bg="/static/images/common/error.svg"></div>
+            <div class="error-view__title">Упс!</div>
+            <div class="error-view__text">Страница которую вы ищите не найдена :(</div>
+            <div class="error-view__link">
+                <a class="btn btn--red" href="{{ route('main') }}" title="На главную">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 17 17 7M7 7h10v10" />
+                    </svg>
+                    <span>На главную</span>
+                </a>
             </div>
         </div>
-    </main>
+    </div>
 @stop

@@ -19,6 +19,8 @@
 @include('blocks.header')
 @include('blocks.mob_nav')
 
+@include('blocks.bread')
+
 <main>
     @yield('content')
 </main>
