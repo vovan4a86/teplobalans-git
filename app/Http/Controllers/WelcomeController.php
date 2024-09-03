@@ -30,17 +30,12 @@ class WelcomeController extends Controller {
         }
 
         $main_slider = S::get('main_slider', []);
-        $main_slider_feats = S::get('main_slider_feats');
-        $about_features = S::get('about_features',[]);
 
         return response()->view('pages.index', [
             'page' => $page,
             'text' => $page->text,
             'h1' => $page->getH1(),
             'main_slider' => $main_slider,
-            'main_catalog' => $main_catalog,
-            'main_slider_feats' => $main_slider_feats,
-            'about_features' => $about_features,
         ]);
     }
 }
