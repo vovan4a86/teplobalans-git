@@ -43,59 +43,40 @@
     <section class="s-about">
         <div class="s-about__container container">
             <div class="s-about__heading">
-                <div class="s-about__title">
-                    <div class="title">О нашей компании и достижениях</div>
-                </div>
-                <div class="s-about__text">
-                    <p>Предлагаем вам сотрудничество в сфере ЖКХ, а в частности — в установке, реконструкции
-                        и обслуживании узлов учёта тепла, индивидуальных тепловых пунктов, насосных станций
-                        водоснабжения</p>
-                </div>
+                @if($title = S::get('main_about_title'))
+                    <div class="s-about__title">
+                        <div class="title">{{ $title }}</div>
+                    </div>
+                @endif
+                @if($text = S::get('main_about_text'))
+                    <div class="s-about__text">
+                        <p>{{ $text }}</p>
+                    </div>
+                @endif
             </div>
-            <div class="s-about__grid">
-                <!--.card-about-->
-                <div class="card-about">
-                    <div class="card-about__icon lazy" data-bg="/static/images/common/ico_about-1.svg"></div>
-                    <div class="card-about__title">Работаем с 2010 года</div>
-                    <div class="card-about__text">
-                        <p>Свыше 7 лет профессионального опыта в сфере ЖКХ и тепло-учёта</p>
-                    </div>
+            @if($feats = S::get('main_about_feats'))
+                <div class="s-about__grid">
+                    @foreach($feats as $feat)
+                        <div class="card-about">
+                            @if($icon = $feat['icon'])
+                                <div class="card-about__icon lazy" data-bg="{{ S::fileSrc($icon) }}"></div>
+                            @endif
+                            <div class="card-about__title">{{ $feat['title'] }}</div>
+                            <div class="card-about__text">
+                                <p>{{ $feat['text'] }}</p>
+                            </div>
+                        </div>
+                    @endforeach
                 </div>
-                <!--.card-about-->
-                <div class="card-about">
-                    <div class="card-about__icon lazy" data-bg="/static/images/common/ico_about-2.svg"></div>
-                    <div class="card-about__title">Штат инженеров и аналитиков</div>
-                    <div class="card-about__text">
-                        <p>В нашей команде работают высококвалифицированные специалисты, которые любят своё дело,
-                            и регулярно улучшают свои навыки, знания</p>
-                    </div>
-                </div>
-                <!--.card-about-->
-                <div class="card-about">
-                    <div class="card-about__icon lazy" data-bg="/static/images/common/ico_about-3.svg"></div>
-                    <div class="card-about__title">Авторизованный сервисный центр с аккредитованной лабораторией</div>
-                    <div class="card-about__text">
-                        <p>Наши партнёры в лице ООО ПП «Технология» всегда помогут оперативно выполнить ремонт,
-                            и поверить любые приборы учёта</p>
-                    </div>
-                </div>
-                <!--.card-about-->
-                <div class="card-about">
-                    <div class="card-about__icon lazy" data-bg="/static/images/common/ico_about-4.svg"></div>
-                    <div class="card-about__title">1000 узлов учёта</div>
-                    <div class="card-about__text">
-                        <p>Свыше 1000 узлов учёта находятся на постоянном сервисном обслуживании и мониторинге в нашей
-                            компании</p>
-                    </div>
-                </div>
-            </div>
+            @endif
             <div class="s-about__heading">
-                <div class="s-about__bottom">
-                    <p>Индивидуальный подход к поставленным задачам — неотъемлемая часть оперативной работы нашего
-                        предприятия</p>
-                </div>
+                @if($about_btn = S::get('main_about_btn_text'))
+                    <div class="s-about__bottom">
+                        <p>{{ $about_btn }}</p>
+                    </div>
+                @endif
                 <div class="s-about__actions">
-                    <a class="btn" href="javascript:void(0)" title="Подробнее">
+                    <a class="btn" href="{{ route('about') }}" title="Подробнее">
                         <span>Подробнее</span>
                     </a>
                 </div>

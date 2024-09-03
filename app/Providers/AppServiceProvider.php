@@ -23,9 +23,6 @@ class AppServiceProvider extends ServiceProvider {
 	 * @return void
 	 */
 	public function register() {
-		$this->app->singleton('cityAliases', function ($app) {
-			return \Fanky\Admin\Models\City::query()->pluck('alias')->all();;
-		});
 		require_once __DIR__ . '/../Http/helpers.php';
 
         if ($this->app->environment('local')) {

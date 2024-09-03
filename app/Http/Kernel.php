@@ -16,7 +16,6 @@ class Kernel extends HttpKernel {
 		'Illuminate\Session\Middleware\StartSession',
 		'Illuminate\View\Middleware\ShareErrorsFromSession',
 		'App\Http\Middleware\VerifyCsrfToken',
-		'App\Http\Middleware\RedirectsMiddleware',
 	];
 
 	/**
@@ -31,8 +30,6 @@ class Kernel extends HttpKernel {
 		'admin.fanky' => 'Fanky\Auth\AdminMiddleware',
 		'guest' => 'App\Http\Middleware\RedirectIfAuthenticated',
 		'menu.admin' => 'Fanky\Admin\AdminMenuMiddleware',
-		'redirects' => 'App\Http\Middleware\RedirectsMiddleware',
-		'regions'	=> 'App\Http\Middleware\CityMiddleware',
 	];
 
 }

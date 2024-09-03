@@ -18,32 +18,8 @@ Route::group(
 );
 
 Route::group(
-    ['middleware' => ['redirects', 'regions']],
+    ['middleware' => []],
     function () {
-        $cities = getCityAliases();
-        $cities = implode('|', $cities);
-        Route::group(
-            [
-                'prefix' => '{city}',
-                'as' => 'region.',
-                'where' => ['city' => $cities]
-            ],
-            function () use ($cities) {
-                Route::get('/', ['as' => 'index', 'uses' => 'PageController@page']);
-                Route::group(
-                    ['prefix' => 'catalog', 'as' => 'catalog.'],
-                    function () {
-                        Route::any('/', ['as' => 'index', 'uses' => 'CatalogController@index']);
-                        Route::any('{alias}', ['as' => 'view', 'uses' => 'CatalogController@view'])
-                            ->where('alias', '([A-Za-z0-9\-\/_]+)');
-                    }
-                );
-
-                Route::any('{alias}', ['as' => 'pages', 'uses' => 'PageController@region_page'])
-                    ->where('alias', '([A-Za-z0-9\-\/_]+)');
-            }
-        );
-
         Route::get('/', ['as' => 'main', 'uses' => 'WelcomeController@index']);
 
         Route::any('news', ['as' => 'news', 'uses' => 'NewsController@index']);

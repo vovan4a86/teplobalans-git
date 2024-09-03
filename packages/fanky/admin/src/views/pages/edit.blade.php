@@ -59,8 +59,7 @@
 
                 @if(!in_array($page->alias, \Fanky\Admin\Models\Page::$excludeImageField))
                     <div class="form-group">
-                        <label for="article-image">Изображение ({{ in_array($page->alias,
-                            \Fanky\Admin\Models\Page::$landing_aliases) ? '1920x650' : ''}})</label>
+                        <label for="article-image">Изображение</label>
                         <input id="article-image" type="file" name="image" value=""
                                onchange="return newsImageAttache(this, event)" accept=".jpg, .jpeg, .png">
                         <div id="article-image-block">
@@ -98,14 +97,15 @@
                 @if($page->id !== 1)
                     {!! Form::hidden('published', 0) !!}
                     {!! Form::groupCheckbox('published', 1, $page->published, 'Показывать страницу') !!}
+                    {!! Form::hidden('on_header', 0) !!}
+                    {!! Form::hidden('on_footer', 0) !!}
+                    {!! Form::hidden('on_mobile', 0) !!}
+                    {!! Form::groupCheckbox('on_header', 1, $page->on_header, 'Показывать в шапке') !!}
+                    {!! Form::groupCheckbox('on_footer', 1, $page->on_footer, 'Показывать в футере') !!}
+                    {!! Form::groupCheckbox('on_mobile', 1, $page->on_mobile, 'Показывать в мобильном меню') !!}
                 @endif
 
-                {!! Form::hidden('on_header', 0) !!}
-                {!! Form::hidden('on_footer', 0) !!}
-                {!! Form::hidden('on_mobile', 0) !!}
-                {!! Form::groupCheckbox('on_header', 1, $page->on_header, 'Показывать в шапке') !!}
-                {!! Form::groupCheckbox('on_footer', 1, $page->on_footer, 'Показывать в футере') !!}
-                {!! Form::groupCheckbox('on_mobile', 1, $page->on_mobile, 'Показывать в мобильном меню') !!}
+
             </div>
 
             @foreach ($setting_groups as $item)
