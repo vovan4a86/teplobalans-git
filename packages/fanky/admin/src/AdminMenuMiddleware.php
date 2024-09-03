@@ -25,29 +25,17 @@ class AdminMenuMiddleware
                 $menu->add('Структура сайта', ['route' => 'admin.pages', 'icon' => 'fa-sitemap'])
                     ->active('/admin/pages/*');
 
-                $menu->add('Каталог', ['route' => 'admin.catalog', 'icon' => 'fa-list'])
-                    ->active('/admin/catalog/*');
+//                $menu->add('Каталог', ['route' => 'admin.catalog', 'icon' => 'fa-list'])
+//                    ->active('/admin/catalog/*');
 
-                $menu->add('Новости', ['route' => 'admin.news', 'icon' => 'fa-calendar'])
-                    ->active('/admin/news/*');
+//                $menu->add('Новости', ['route' => 'admin.news', 'icon' => 'fa-calendar'])
+//                    ->active('/admin/news/*');
 
-                $menu->add('Проекты', ['route' => 'admin.projects', 'icon' => 'fa-handshake-o'])
-                    ->active('/admin/projects/*');
+//                $menu->add('Проекты', ['route' => 'admin.projects', 'icon' => 'fa-handshake-o'])
+//                    ->active('/admin/projects/*');
 
                 $menu->add('Вакансии', ['route' => 'admin.vacancies', 'icon' => 'fa-vcard-o'])
                     ->active('/admin/vacancies/*');
-
-                $menu->add('Сертификаты', ['route' => 'admin.certificates', 'icon' => 'fa-certificate'])
-                    ->active('/admin/certificates/*');
-
-                $menu->add('Производство', ['route' => 'admin.services', 'icon' => 'fa-magic'])
-                    ->active('/admin/services/*');
-
-//                $menu->add('Заказы', ['route' => 'admin.orders', 'icon' => 'fa-dollar'])
-//                    ->active('/admin/orders/*');
-
-                $menu->add('Региональность', ['route' => 'admin.cities', 'icon' => 'fa-globe'])
-                    ->active('/admin/cities/*');
 
                 $menu->add('Настройки', ['icon' => 'fa-cogs'])
                     ->nickname('settings');
