@@ -57,6 +57,7 @@ Route::group(
         Route::any('about/projects/{id}', ['as' => 'projects.item', 'uses' => 'ObjectsController@item']);
 
         Route::any('policy', ['as' => 'policy', 'uses' => 'PageController@policy']);
+        Route::any('agreement', ['as' => 'agreement', 'uses' => 'PageController@agreement']);
 
         Route::any('catalog', ['as' => 'catalog', 'uses' => 'CatalogController@index']);
         Route::any('catalog/landing/opori-osveshcheniya-i-svetilniki-iz-alyuminiya',

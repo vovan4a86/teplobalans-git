@@ -18,17 +18,6 @@ use View;
 
 class PageController extends Controller {
 
-    public function region_index($city_alias): Response
-    {
-        $this->city = City::current($city_alias);
-        return $this->page();
-    }
-
-    public function region_page($alias)
-    {
-        return redirect(route('default', [$alias]), 301);
-    }
-
     public function page($alias = null): Response
     {
         $path = explode('/', $alias);
@@ -129,6 +118,23 @@ class PageController extends Controller {
         ]);
     }
 
+    public function agreement()
+    {
+        $page = Page::whereAlias('user_agreement')->first();
+        if (!$page)
+            abort(404, 'Страница не найдена');
+        $bread = $page->getBread();
+        $page->ogGenerate();
+        $page->setSeo();
+
+        return view('pages.text', [
+            'page' => $page,
+            'text' => $page->text,
+            'h1'    => $page->getH1(),
+            'bread' => $bread
+        ]);
+    }
+
     public function search() {
         \View::share('canonical', route('search'));
         $q = Request::get('q', '');
@@ -194,25 +200,5 @@ class PageController extends Controller {
         $response->header('Content-Length', strlen($response->getOriginalContent()));
 
         return $response;
-    }
-
-    //custom landing page
-    public function opory() {
-        $page = Page::whereAlias('opori-osveshcheniya-i-svetilniki-iz-alyuminiya')->first();
-        if (!$page || !$page->published) {
-            abort(404, 'Страница не найдена');
-        }
-
-        $page->setSeo();
-        $page->ogGenerate();
-
-        $certificates = Certificate::orderBy('order')->get();
-
-        return view('catalog.opory', [
-            'bread' => $page->getBread(),
-            'h1' => $page->getH1(),
-            'page' => $page,
-            'certificates' => $certificates,
-        ]);
     }
 }

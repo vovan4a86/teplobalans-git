@@ -22,7 +22,7 @@ class SiteServiceProvider extends ServiceProvider
     public function boot()
     {
         View::composer(
-            ['template', 'template_error'],
+            ['template'],
             function (\Illuminate\View\View $view) {
                 $header_menu = Cache::get('header_menu', collect());
                 if (!count($header_menu)) {
@@ -34,17 +34,6 @@ class SiteServiceProvider extends ServiceProvider
                         ->with(['public_children_header'])
                         ->get();
                     Cache::add('header_menu', $header_menu, now()->addMinutes(60));
-                }
-
-                $catalog_menu = Cache::get('catalog_menu', collect());
-                if (!count($catalog_menu)) {
-                    $catalog_menu = Catalog::query()
-                        ->public()
-                        ->where('parent_id', 0)
-                        ->orderBy('order')
-                        ->with(['public_children', 'public_children.public_children'])
-                        ->get();
-                    Cache::add('catalog_menu', $catalog_menu, now()->addMinutes(60));
                 }
 
                 $mobile_menu = Cache::get('mobile_menu', collect());
@@ -66,29 +55,16 @@ class SiteServiceProvider extends ServiceProvider
                         ->where('parent_id', 1)
                         ->where('on_footer', 1)
                         ->orderBy('order')
-                        ->with(['public_children'])
                         ->get();
                     Cache::add('footer_menu', $footer_menu, now()->addMinutes(60));
-                }
-
-                $cities = City::query()->orderBy('name')
-                    ->get(['id', 'alias', 'name', DB::raw('LEFT(name,1) as letter')]);
-
-                if (!$city_alias = session('city_alias')) {
-                    $current_city = null;
-                } else {
-                    $current_city = City::whereAlias($city_alias)->first();
                 }
 
                 $view->with(
                     compact(
                         [
                             'header_menu',
-                            'catalog_menu',
                             'mobile_menu',
-                            'footer_menu',
-                            'current_city',
-                            'cities'
+                            'footer_menu'
                         ]
                     )
                 );
@@ -97,8 +73,15 @@ class SiteServiceProvider extends ServiceProvider
 
         View::composer(
             ['errors.404'],
-            function (\Illuminate\View\View $view) {
+            function () {
                 \SEO::setTitle('Страница не найдена');
+            }
+        );
+
+        View::composer(
+            ['errors.500'],
+            function () {
+                \SEO::setTitle('Проблемы с сервером');
             }
         );
     }
