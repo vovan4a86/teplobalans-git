@@ -25,8 +25,8 @@ class AdminMenuMiddleware
                 $menu->add('Структура сайта', ['route' => 'admin.pages', 'icon' => 'fa-sitemap'])
                     ->active('/admin/pages/*');
 
-//                $menu->add('Каталог', ['route' => 'admin.catalog', 'icon' => 'fa-list'])
-//                    ->active('/admin/catalog/*');
+                $menu->add('Услуги', ['route' => 'admin.catalog', 'icon' => 'fa-list'])
+                    ->active('/admin/catalog/*');
 
 //                $menu->add('Новости', ['route' => 'admin.news', 'icon' => 'fa-calendar'])
 //                    ->active('/admin/news/*');

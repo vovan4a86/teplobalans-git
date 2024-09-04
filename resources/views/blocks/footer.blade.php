@@ -30,21 +30,15 @@
                                 <a class="footer__nav-category" href="{{ route('services') }}">Услуги</a>
                             </li>
                         </ul>
-                        <ul class="footer__nav-links">
-                            <li class="footer__nav-item">
-                                <a class="footer__nav-link" href="javascript:void(0)">Обслуживание УКУТ</a>
-                            </li>
-                            <li class="footer__nav-item">
-                                <a class="footer__nav-link" href="javascript:void(0)">Установка САРТ</a>
-                            </li>
-                            <li class="footer__nav-item">
-                                <a class="footer__nav-link" href="javascript:void(0)">Проектирование и реконструкция
-                                    УКУТ</a>
-                            </li>
-                            <li class="footer__nav-item">
-                                <a class="footer__nav-link" href="javascript:void(0)">Проверка, ремонт оборудования</a>
-                            </li>
-                        </ul>
+                        @if(isset($services_links))
+                            <ul class="footer__nav-links">
+                                @foreach($services_links as $service)
+                                    <li class="footer__nav-item">
+                                        <a class="footer__nav-link" href="{{ $service->url }}">{{ $service->name }}</a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        @endif
                     </nav>
                 </div>
                 <div class="footer__infos">

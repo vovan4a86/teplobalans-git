@@ -1,44 +1,33 @@
 @extends('template')
 @section('content')
-    <main>
-        <!--.b-heading-->
-        <div class="b-heading">
-            <div class="b-heading__container container">
-                <div class="b-heading__bread">
-                   @include('blocks.bread')
-                </div>
-                <div class="b-heading__body">
-                    <div class="title">{{ $h1 }}</div>
-                </div>
+    <!--section.s-srv(class=(servicesPage && 'is-page'))-->
+    <section class="s-srv is-page">
+        <div class="s-srv__container container">
+            <div class="title">{{ $h1 }}</div>
+            <div class="s-srv__list">
+                <!--.card-srv-->
+                @foreach($services as $item)
+                    <div class="card-srv">
+                        <div class="card-srv__body">
+                            <div class="card-srv__title">{{ $item->h1 ?: $item->name }}</div>
+                            <div class="card-srv__text">
+                                <p>{{ $item->announce }}</p>
+                            </div>
+                            <div class="card-srv__foot">
+                                <p>{{ $item->announce_footer }}</p>
+                            </div>
+                            <div class="card-srv__actions">
+                                <a class="btn" href="{{ $item->url }}" title="Подробнее">
+                                    <span>Подробнее</span>
+                                </a>
+                            </div>
+                        </div>
+                        <!-- example sizing: 603x386-->
+                        <a class="card-srv__view lazy" data-bg="{{ $item->thumb(2) }}"
+                           href="{{ $item->url }}" title="{{ $item->h1 ?: $item->name }}"></a>
+                    </div>
+                @endforeach
             </div>
         </div>
-        <!--section.s-production-->
-        <section class="s-production">
-            <div class="s-production__container container">
-                @if(count($services))
-                    <div class="s-production__grid">
-                        @foreach($services as $item)
-                            <div class="s-production__item">
-                                <!--.b-card-->
-                                <article class="b-card">
-                                    <div class="b-card__view lazy" data-bg="{{ $item->thumb(2) }}"></div>
-                                    <div class="b-card__body">
-                                        <!-- если будет нужен заголовок-->
-                                        <h2 class="v-hidden">{{ $item->name }}</h2>
-                                        <!---->
-                                        <a class="b-card__title" href="javascript:void(0)" title="{{ $item->name }}">{{ $item->name }}</a>
-                                        <div class="b-card__text text-block">
-                                            {!! $item->text !!}
-                                        </div>
-                                    </div>
-                                </article>
-                            </div>
-                        @endforeach
-                    </div>
-                @else
-                    Пусто
-                @endif
-            </div>
-        </section>
-    </main>
+    </section>
 @stop

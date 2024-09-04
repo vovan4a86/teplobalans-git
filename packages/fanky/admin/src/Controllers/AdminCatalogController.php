@@ -105,7 +105,7 @@ class AdminCatalogController extends AdminController
         if (!$id || !($catalog = Catalog::findOrFail($id))) {
             $catalog = new Catalog(
                 [
-                    'parent_id' => Request::get('parent'),
+                    'parent_id' => 0,
                     'published' => 1
                 ]
             );
@@ -114,11 +114,6 @@ class AdminCatalogController extends AdminController
             ->where('id', '!=', $catalog->id)
             ->get();
 
-        $catalogProducts = $catalog->getRecurseProducts()
-            ->orderBy('name')
-            ->pluck('id', 'name')
-            ->all();
-
         $tab = Request::get('tab');
 
         return view(
@@ -126,8 +121,7 @@ class AdminCatalogController extends AdminController
             [
                 'catalog' => $catalog,
                 'catalogs' => $catalogs,
-                'tab' => $tab,
-                'catalogProducts' => $catalogProducts,
+                'tab' => $tab
             ]
         );
     }
@@ -135,10 +129,6 @@ class AdminCatalogController extends AdminController
     public function getCatalogEdit($id = null)
     {
         $catalogs = Catalog::orderBy('order')->get();
-
-        if (isset(Catalog::$redirectToCustomPage[$id])) {
-            redirect()->route('admin.pages.edit', Catalog::$redirectToCustomPage[$id]);
-        }
 
         return view(
             'admin::catalog.main',
@@ -153,9 +143,6 @@ class AdminCatalogController extends AdminController
     {
         $id = Request::input('id');
         $data = Request::except(['id']);
-        $data = array_filter($data, function ($key) {
-            return !Str::startsWith($key, 'landing_file_');
-        }, ARRAY_FILTER_USE_KEY);
 
         if (!array_get($data, 'alias')) {
             $data['alias'] = Text::translit($data['name']);
@@ -174,7 +161,6 @@ class AdminCatalogController extends AdminController
         }
 
         $image = Request::file('image');
-        $icon = Request::file('icon');
 
         // валидация данных
         $validator = Validator::make(
@@ -192,12 +178,6 @@ class AdminCatalogController extends AdminController
         if ($image) {
             $file_name = Catalog::uploadImage($image);
             $data['image'] = $file_name;
-            $redirect = true;
-        }
-        // Загружаем иконку
-        if ($icon) {
-            $file_name = Catalog::uploadIcon($icon);
-            $data['icon'] = $file_name;
             $redirect = true;
         }
 

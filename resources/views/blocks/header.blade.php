@@ -19,25 +19,48 @@
                 @foreach($header_menu as $header_menu_item)
                     @if(count($header_menu_item->public_children_header))
                         <li class="header__nav-item is-dropdown" itemprop="itemListElement" itemscope
-                        itemtype="https://schema.org/ItemList">
-                        <a class="header__nav-link is-dropdown" href="{{ $header_menu_item->url }}" itemprop="url">
-                            <span>{{ $header_menu_item->name }}</span>
-                            <meta itemprop="name" content="{{ $header_menu_item->name }}">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="10" height="7" fill="none">
-                                <path fill="currentColor" fill-rule="evenodd"
-                                      d="M5 2.578 1.332 6.3 0 5.362 4.334.964A.937.937 0 0 1 5 .7c.257 0 .501.096.666.264L10 5.362 8.668 6.3 5 2.578Z"
-                                      clip-rule="evenodd"/>
-                            </svg>
-                        </a>
-                        <ul class="header__dropdown list-reset">
-                            @foreach($header_menu_item->public_children_header as $child)
-                                <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ItemList">
-                                    <a href="{{ $child->url }}" itemprop="url">{{ $child->name }}</a>
-                                    <meta itemprop="name" content="{{ $child->name }}">
-                                </li>
-                            @endforeach
-                        </ul>
-                    </li>
+                            itemtype="https://schema.org/ItemList">
+                            <a class="header__nav-link is-dropdown" href="{{ $header_menu_item->url }}" itemprop="url">
+                                <span>{{ $header_menu_item->name }}</span>
+                                <meta itemprop="name" content="{{ $header_menu_item->name }}">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="10" height="7" fill="none">
+                                    <path fill="currentColor" fill-rule="evenodd"
+                                          d="M5 2.578 1.332 6.3 0 5.362 4.334.964A.937.937 0 0 1 5 .7c.257 0 .501.096.666.264L10 5.362 8.668 6.3 5 2.578Z"
+                                          clip-rule="evenodd"/>
+                                </svg>
+                            </a>
+                            <ul class="header__dropdown list-reset">
+                                @foreach($header_menu_item->public_children_header as $child)
+                                    <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ItemList">
+                                        <a href="{{ $child->url }}" itemprop="url">{{ $child->name }}</a>
+                                        <meta itemprop="name" content="{{ $child->name }}">
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </li>
+                    @elseif($header_menu_item->alias == 'services')
+                        <li class="header__nav-item is-dropdown" itemprop="itemListElement" itemscope
+                            itemtype="https://schema.org/ItemList">
+                            <a class="header__nav-link is-dropdown" href="{{ $header_menu_item->url }}" itemprop="url">
+                                <span>{{ $header_menu_item->name }}</span>
+                                <meta itemprop="name" content="{{ $header_menu_item->name }}">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="10" height="7" fill="none">
+                                    <path fill="currentColor" fill-rule="evenodd"
+                                          d="M5 2.578 1.332 6.3 0 5.362 4.334.964A.937.937 0 0 1 5 .7c.257 0 .501.096.666.264L10 5.362 8.668 6.3 5 2.578Z"
+                                          clip-rule="evenodd"/>
+                                </svg>
+                            </a>
+                            @if(isset($services_links))
+                                <ul class="header__dropdown list-reset">
+                                    @foreach($services_links as $service)
+                                        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ItemList">
+                                            <a href="{{ $service->url }}" itemprop="url">{{ $service->h1 ?: $service->name }}</a>
+                                            <meta itemprop="name" content="{{ $service->h1 ?: $service->name }}">
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            @endif
+                        </li>
                     @else
                         <li class="header__nav-item" itemprop="itemListElement" itemscope
                             itemtype="https://schema.org/ItemList">
@@ -95,7 +118,8 @@
                 </ul>
             </div>
             @if($header_phone = S::get('header_phone'))
-                <a class="header__phone" href="tel:{{ SiteHelper::clearPhone($header_phone) }}" title="Позвонить нам">{{ $header_phone }}</a>
+                <a class="header__phone" href="tel:{{ SiteHelper::clearPhone($header_phone) }}"
+                   title="Позвонить нам">{{ $header_phone }}</a>
             @endif
         </div>
         <div class="header__mobile">

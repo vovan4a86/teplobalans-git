@@ -77,18 +77,11 @@ class Catalog extends Model
         'children_ids' => 'array',
     ];
 
-    public static $redirectToCustomPage = [
-        '4' => 23
-    ];
-
     const UPLOAD_URL = '/uploads/catalogs/';
-    const NO_IMAGE = '/adminlte/no-catalog-image.png';
-    const DOC_IMAGE = '/adminlte/doc_icon.png';
-    const NO_CATALOG_ICON = '/adminlte/no-catalog-icon.png';
 
     public static $thumbs = [
         1 => '100x100|fit', //admin
-        2 => '424x620|fit', //main page
+        2 => '675x390', //card
     ];
 
     public static function boot()
@@ -271,18 +264,10 @@ class Catalog extends Model
 
     public function getUrlAttribute(): string
     {
-        if (in_array($this->alias, Page::$landing_aliases)) {
-            return url('/catalog/landing/' . $this->alias);
-        }
-
         if ($this->_url) {
             return $this->_url;
         }
-        $path = 'catalog/' . $this->slug;
-        $current_city = SiteHelper::getCurrentCity();
-        if ($current_city) {
-            $path = $current_city->alias . '/' . ltrim($path, '/');
-        }
+        $path = 'services/' . $this->alias;
 
         $this->_url = route('default', ['alias' => $path]);
 
@@ -358,10 +343,6 @@ class Catalog extends Model
         }
 
         $path = '/catalog';
-        $current_city = SiteHelper::getCurrentCity();
-        if ($current_city) {
-            $path = $current_city->alias . $path;
-        }
         $bread[] = [
             'name' => 'Каталог',
             'url' => url($path),

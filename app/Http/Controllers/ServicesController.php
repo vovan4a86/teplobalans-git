@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use App;
 use App\Classes\SiteHelper;
+use Fanky\Admin\Models\Catalog;
 use Fanky\Admin\Models\News;
 use Fanky\Admin\Models\Page;
 use Fanky\Admin\Models\Service;
@@ -32,14 +33,14 @@ class ServicesController extends Controller
         $page->ogGenerate();
         $page->setSeo();
 
-        $services = Service::public()->orderBy('order')->get();
+        $services = Catalog::public()->orderBy('order')->get();
 
         return view(
             'services.index',
             [
                 'h1' => $page->getH1(),
                 'bread' => $bread,
-                'services' => $services,
+                'services' => $services
             ]
         );
     }

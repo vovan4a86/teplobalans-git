@@ -25,8 +25,8 @@
     @yield('content')
 </main>
 
+@if(Route::is(['main', 'prices', 'services.item']))
 <!--if homepage | pricePage | servicePage-->
-<!--section.s-usr-->
 <section class="s-usr">
     <div class="s-usr__container container">
         <div class="title">С кем можно связаться через сайт</div>
@@ -174,9 +174,7 @@
         </div>
     </div>
 </section>
-<!--endif-->
-<!--if homepage | pricePage | servicePage-->
-<!--section.s-cont-->
+
 <section class="s-cont">
     <div class="s-cont__container">
         <div class="s-cont__body">
@@ -231,7 +229,7 @@
         <div class="s-cont__map" id="map-1" data-map="data-map" data-lat="56.813459" data-long="60.595167" data-hint="г. Екатеринбург, ул. Фрунзе, 96В, 3 этаж"></div>
     </div>
 </section>
-<!--endif-->
+@endif
 
 @include('blocks.footer')
 @include('blocks.popups')

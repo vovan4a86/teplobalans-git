@@ -31,21 +31,18 @@ class SiteServiceProvider extends ServiceProvider
                         ->where('parent_id', 1)
                         ->where('on_header', 1)
                         ->orderBy('order')
-                        ->with(['public_children_header'])
                         ->get();
                     Cache::add('header_menu', $header_menu, now()->addMinutes(60));
                 }
 
-                $mobile_menu = Cache::get('mobile_menu', collect());
-                if (!count($mobile_menu)) {
-                    $mobile_menu = Page::query()
+                $services_links = Cache::get('services_links', collect());
+                if (!count($services_links)) {
+                    $services_links = Catalog::query()
                         ->public()
-                        ->where('parent_id', 1)
-                        ->where('on_mobile', 1)
+                        ->where('parent_id', 0)
                         ->orderBy('order')
-                        ->with(['public_children'])
                         ->get();
-                    Cache::add('mobile_menu', $mobile_menu, now()->addMinutes(60));
+                    Cache::add('services_links', $services_links, now()->addMinutes(60));
                 }
 
                 $footer_menu = Cache::get('footer_menu', collect());
@@ -63,7 +60,7 @@ class SiteServiceProvider extends ServiceProvider
                     compact(
                         [
                             'header_menu',
-                            'mobile_menu',
+                            'services_links',
                             'footer_menu'
                         ]
                     )

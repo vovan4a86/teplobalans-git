@@ -17,21 +17,6 @@ function catalogImageAttache(elem, e) {
     $(elem).val('');
 }
 
-function catalogIconAttache(elem, e) {
-    $.each(e.target.files, function (key, file) {
-        if (file['size'] > max_file_size) {
-            alert('Слишком большой размер файла. Максимальный размер 10Мб');
-        } else {
-            catalogIcon = file;
-            renderImage(file, function (imgSrc) {
-                let item = '<img class="img-polaroid" src="' + imgSrc + '" height="100" data-image="' + imgSrc + '" onclick="return popupImage($(this).data(\'image\'))" alt="">';
-                $('#catalog-icon-block').html(item);
-            });
-        }
-    });
-    $(elem).val('');
-}
-
 function catalogImageDel(elem) {
     if (!confirm('Удалить изображение?')) return false;
     let url = $(elem).attr('href');
@@ -39,20 +24,6 @@ function catalogImageDel(elem) {
         if (typeof json.msg != 'undefined') alert(urldecode(json.msg));
         if (typeof json.success != 'undefined' && json.success === true) {
             $(elem).closest('#catalog-image-block').fadeOut(300, function () {
-                $(this).empty();
-            });
-        }
-    });
-    return false;
-}
-
-function catalogIconDel(elem) {
-    if (!confirm('Удалить иконку?')) return false;
-    let url = $(elem).attr('href');
-    sendAjax(url, {}, function (json) {
-        if (typeof json.msg != 'undefined') alert(urldecode(json.msg));
-        if (typeof json.success != 'undefined' && json.success === true) {
-            $(elem).closest('#catalog-icon-block').fadeOut(300, function () {
                 $(this).empty();
             });
         }
@@ -286,14 +257,7 @@ $(document).ready(function () {
                         "icon": "fa fa-pencil text-yellow",
                         "label": "Редактировать страницу",
                         "action": function (obj) {
-                            sendAjax('/admin/catalog/is-custom-page/' + $node.id, {}, function(json) {
-                                if (json.success && json.page_id) {
-                                    console.log(json.page_id);
-                                    document.location.href = '/admin/pages/edit/' + json.page_id;
-                                } else {
-                                    document.location.href = '/admin/catalog/catalog-edit/' + $node.id;
-                                }
-                            })
+                            document.location.href = '/admin/catalog/catalog-edit/' + $node.id;
                         }
                     },
                     "Remove": {
@@ -325,7 +289,7 @@ $(document).ready(function () {
         sendAjax('/admin/catalog/catalog-reorder', d);
     }).on("activate_node.jstree", function (e, data) {
         if (data.event.button === 0) {
-            window.location.href = '/admin/catalog/products/' + data.node.id;
+            window.location.href = '/admin/catalog/catalog-edit/' + data.node.id;
         }
     });
 });
@@ -449,36 +413,6 @@ function deleteProductsImage(btn, e, catalogId) {
             location.href = redirect;
         }
     })
-}
-
-function toggleIsNew(elem) {
-    const id = $(elem).closest('tr').data('id');
-    const url = '/admin/catalog/product-toggle-is-new/' + id;
-
-    sendAjax(url, {}, function (json) {
-        if (json.success) {
-            if (json.active) {
-                $(elem).prop('checked', 'checked')
-            } else {
-                $(elem).prop('checked', false)
-            }
-        }
-    });
-}
-
-function toggleIsHit(elem) {
-    const id = $(elem).closest('tr').data('id');
-    const url = '/admin/catalog/product-toggle-is-hit/' + id;
-
-    sendAjax(url, {}, function (json) {
-        if (json.success) {
-            if (json.active) {
-                $(elem).prop('checked', 'checked')
-            } else {
-                $(elem).prop('checked', false)
-            }
-        }
-    });
 }
 
 //mass images
