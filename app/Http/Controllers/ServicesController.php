@@ -47,7 +47,7 @@ class ServicesController extends Controller
 
     public function item($alias)
     {
-        $item = News::whereAlias($alias)->public()->first();
+        $item = Catalog::whereAlias($alias)->public()->first();
         if (!$item) {
             abort(404);
         }
@@ -60,24 +60,20 @@ class ServicesController extends Controller
 
         Auth::init();
         if (Auth::user() && Auth::user()->isAdmin) {
-            View::share('admin_edit_link', route('admin.news.edit', [$item->id]));
+            View::share('admin_edit_link', route('admin.catalog.edit', [$item->id]));
         }
 
         $item->setSeo();
         $item->ogGenerate();
 
-        $aside_items = News::orderBy('date', 'desc')
-            ->public()->where('aside', 1)->get();
-
         return view(
             'news.item',
             [
+                'bread' => $bread,
                 'item' => $item,
                 'h1' => $item->getH1(),
+                'text_title' => $item->text_title,
                 'text' => $item->text,
-                'text_after' => $item->text_after,
-                'bread' => $bread,
-                'aside_items' => $aside_items
             ]
         );
     }

@@ -4,7 +4,7 @@ namespace Fanky\Admin\Controllers;
 
 use Exception;
 use Fanky\Admin\Models\CatalogFilter;
-use Fanky\Admin\Models\CatalogImage;
+use Fanky\Admin\Models\CatalogItem;
 use Fanky\Admin\Models\Page;
 use Fanky\Admin\Models\ProductChar;
 use Fanky\Admin\Pagination;
@@ -161,6 +161,8 @@ class AdminCatalogController extends AdminController
         }
 
         $image = Request::file('image');
+        $tech_card_image = Request::file('tech_card_image');
+        $file = Request::file('file');
 
         // валидация данных
         $validator = Validator::make(
@@ -178,6 +180,20 @@ class AdminCatalogController extends AdminController
         if ($image) {
             $file_name = Catalog::uploadImage($image);
             $data['image'] = $file_name;
+            $redirect = true;
+        }
+
+        // Загружаем изображение
+        if ($tech_card_image) {
+            $file_name = Catalog::uploadImage($tech_card_image);
+            $data['tech_card_image'] = $file_name;
+            $redirect = true;
+        }
+
+        // Загружаем файл
+        if ($file) {
+            $file_name = Catalog::uploadFile($file);
+            $data['file'] = $file_name;
             $redirect = true;
         }
 
@@ -212,57 +228,77 @@ class AdminCatalogController extends AdminController
         return ['success' => true];
     }
 
-    public function postCatalogGalleryImageUpload($catalog_id): array
+    public function postCatalogItemsUpload($catalog_id): array
     {
-        $catalog = Catalog::find($catalog_id);
-        $images = Request::file('images');
+        $images = Request::file('items');
         $items = [];
         if ($images) {
             foreach ($images as $image) {
-                $file_name = CatalogImage::uploadImage($image, $catalog->alias);
-                $order = CatalogImage::where('catalog_id', $catalog_id)->max('order') + 1;
-                $item = CatalogImage::create(['catalog_id' => $catalog_id, 'image' => $file_name, 'order' => $order]);
+                $file_name = CatalogItem::uploadIcon($image);
+                $order = CatalogItem::where('catalog_id', $catalog_id)->max('order') + 1;
+                $item = CatalogItem::create(['catalog_id' => $catalog_id, 'icon' => $file_name, 'order' => $order]);
                 $items[] = $item;
             }
         }
 
         $html = '';
         foreach ($items as $item) {
-            $html .= view('admin::catalog.catalog_gallery_image', ['image' => $item, 'alias' => $catalog->alias]);
+            $html .= view('admin::catalog.catalog_item', ['item' => $item]);
         }
 
         return ['html' => $html];
     }
 
-    public function postCatalogGalleryImageOrder(): array
+    public function postCatalogItemOrder(): array
     {
         $sorted = Request::get('sorted', []);
         foreach ($sorted as $order => $id) {
-            CatalogImage::whereId($id)->update(['order' => $order]);
+            CatalogItem::whereId($id)->update(['order' => $order]);
         }
 
         return ['success' => true];
     }
 
-    public function postCatalogGalleryImageDelete($id): array
+    public function postCatalogItemDelete($id): array
     {
-        $item = CatalogImage::findOrFail($id);
+        $item = CatalogItem::findOrFail($id);
         if ($item) {
-            $item->deleteImage(null, $item->catalog->alias);
+            $item->deleteIcon();
             $item->delete();
             return ['success' => true];
         }
         return ['success' => false, 'msg' => 'Изображение не найдено!'];
     }
 
-    public function postIsCustomPage($id): array
+    public function postCatalogItemDataSave($id)
     {
-        if(isset(Catalog::$redirectToCustomPage[$id])) {
-            return ['success' => true, 'page_id' => array_get(Catalog::$redirectToCustomPage, $id)];
+        $image = CatalogItem::findOrFail($id);
+        $title = Request::get('title');
+        $list = Request::get('list');
+        $image->title = $title;
+        $image->list = $list;
+        $image->save();
+
+        return ['success' => true];
+    }
+
+    public function postCatalogItemEdit($id)
+    {
+        $item = CatalogItem::findOrFail($id);
+        return view('admin::catalog.item_data_edit', ['item' => $item]);
+    }
+
+    public function postTechCardImageDelete($id): array
+    {
+        $catalog = Catalog::find($id);
+        if (!$catalog) {
+            return ['success' => false];
         }
 
-        return ['success' => false];
+        @unlink(public_path(Catalog::UPLOAD_URL . $catalog->tech_card_image));
+        $catalog->update(['tech_card_image' => null]);
 
+        return ['success' => true];
     }
 
 
@@ -290,6 +326,19 @@ class AdminCatalogController extends AdminController
 
         $catalog->deleteImage();
         $catalog->update(['image' => null]);
+
+        return ['success' => true];
+    }
+
+    public function postCatalogFileDelete($id): array
+    {
+        $catalog = Catalog::find($id);
+        if (!$catalog) {
+            return ['success' => false];
+        }
+
+        $catalog->deleteSrcFile();
+        $catalog->update(['file' => null]);
 
         return ['success' => true];
     }

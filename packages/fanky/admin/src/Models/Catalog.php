@@ -78,6 +78,7 @@ class Catalog extends Model
     ];
 
     const UPLOAD_URL = '/uploads/catalogs/';
+    const FILE_IMAGE = '/adminlte/document_small.png';
 
     public static $thumbs = [
         1 => '100x100|fit', //admin
@@ -210,12 +211,6 @@ class Catalog extends Model
         return $this->hasMany('Fanky\Admin\Models\Catalog', 'parent_id')->orderBy('order');
     }
 
-    public function landing_blocks(): HasMany
-    {
-        return $this->hasMany(LandingBlock::class, 'catalog_id')
-            ->orderBy('order');
-    }
-
     public function public_children(): HasMany
     {
         return $this->children()
@@ -223,28 +218,23 @@ class Catalog extends Model
             ->orderBy('order');
     }
 
-    public function products(): HasMany
+    public function items(): HasMany
     {
-        return $this->hasMany(Product::class, 'catalog_id');
+        return $this->hasMany(CatalogItem::class, 'catalog_id')
+            ->orderBy('order');
     }
 
     public function single_image(): HasOne
     {
-        return $this->hasOne(CatalogImage::class)
+        return $this->hasOne(CatalogItem::class)
             ->orderBy('order');
     }
 
     public function images(): HasMany
     {
-        return $this->hasMany(CatalogImage::class)
+        return $this->hasMany(CatalogItem::class)
             ->orderBy('order')
             ->with(['catalog']);
-    }
-
-    public function public_products()
-    {
-        return $this->hasMany('Fanky\Admin\Models\Product', 'catalog_id')
-            ->public()->orderBy('order');
     }
 
     public function scopePublic($query)

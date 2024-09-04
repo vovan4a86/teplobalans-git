@@ -22,8 +22,9 @@
     <div class="nav-tabs-custom">
         <ul class="nav nav-tabs">
             <li class="{{ isset($tab) ? '' : 'active' }}"><a href="#tab_1" data-toggle="tab">Параметры</a></li>
-            <li><a href="#tab_2" data-toggle="tab">Тексты</a></li>
-            <li><a href="#tab_gallery" data-toggle="tab">Изображения</a></li>
+            <li><a href="#tab_text" data-toggle="tab">Текст</a></li>
+            <li><a href="#tab_tech" data-toggle="tab">Тех.обслуживание</a></li>
+            <li><a href="#tab_file" data-toggle="tab">Договор</a></li>
 
             @if($catalog->id)
                 <li class="pull-right">
@@ -68,28 +69,6 @@
                 {!! Form::groupText('og_title', $catalog->og_title, 'OpenGraph title') !!}
                 {!! Form::groupText('og_description', $catalog->og_description, 'OpenGraph description') !!}
 
-{{--                <div class="box box-primary box-solid">--}}
-{{--                    <div class="box-header with-border">--}}
-{{--                        <span class="box-title">Шаблон автооптимизации для товаров (см. Настройки)</span>--}}
-{{--                    </div>--}}
-{{--                    <div class="box-body">--}}
-{{--                        {!! Form::groupText('product_title_template', $catalog->product_title_template, 'Шаблон title:  '.$catalog->getDefaultTitleTemplate()) !!}--}}
-{{--                        {!! Form::groupText('product_description_template', $catalog->product_description_template, 'Шаблон description: '.$catalog->getDefaultDescriptionTemplate()) !!}--}}
-
-{{--                        {!! Form::groupRichtext('product_announce_template', $catalog->product_announce_template, 'Шаблон анонса') !!}--}}
-{{--                        {!! Form::groupRichtext('product_text_template', $catalog->product_text_template, 'Шаблон текста') !!}--}}
-{{--                    </div>--}}
-{{--                    <div class="box-footer">--}}
-{{--                        Коды замены:--}}
-{{--                        <ul>--}}
-{{--                            <li>{name} - название товара</li>--}}
-{{--                            <li>{h1} - H1 товара</li>--}}
-{{--                            <li>{lower_name} - название товара в нижнем регистре</li>--}}
-{{--                            <li>{price} - поле товара - Цена</li>--}}
-{{--                        </ul>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-
                 {!! Form::hidden('published', 0) !!}
                 {!! Form::groupCheckbox('published', 1, $catalog->published, 'Показывать услугу') !!}
                 {!! Form::hidden('on_main', 0) !!}
@@ -97,29 +76,85 @@
 
             </div>
 
-            <div class="tab-pane" id="tab_2">
+            <div class="tab-pane" id="tab_text">
+                {!! Form::groupTextarea('text_title', $catalog->text_title, 'Заголовок основного текста') !!}
                 {!! Form::groupRichtext('text', $catalog->text, 'Основной текст') !!}
             </div>
 
-            <div class="tab-pane" id="tab_gallery">
+            <div class="tab-pane" id="tab_tech">
+                {!! Form::groupText('tech_title', $catalog->tech_title, 'Заголовок') !!}
+                {!! Form::groupText('tech_text', $catalog->tech_text, 'Текст') !!}
+
+                <label>Загрузить иконки карточек (50x50)</label>
                 @if ($catalog->id)
                     <div class="form-group">
                         <label class="btn btn-success">
                             <input id="offer_imag_upload" type="file" multiple
-                                   data-url="{{ route('admin.catalog.catalogGalleryImageUpload', $catalog->id) }}"
-                                   style="display:none;" onchange="catalogGalleryImageUpload(this, event)">
+                                   data-url="{{ route('admin.catalog.catalogItemsUpload', $catalog->id) }}"
+                                   style="display:none;" onchange="catalogItemsUpload(this, event)">
                             Загрузить изображения
                         </label>
                     </div>
 
                     <div class="images_list">
-                        @foreach ($catalog->images as $image)
-                            @include('admin::catalog.catalog_gallery_image', ['image' => $image])
+                        @foreach ($catalog->items as $item)
+                            @include('admin::catalog.catalog_item')
                         @endforeach
                     </div>
                 @else
-                    <p class="text-yellow">Изображения можно будет загрузить после сохранения товара!</p>
+                    <p class="text-yellow">Сначала сохраните услугу.</p>
                 @endif
+
+                <hr>
+                <label>Большая карточка</label>
+                {!! Form::groupText('tech_card_title', $catalog->tech_card_title, 'Заголовок') !!}
+                {!! Form::groupRichtext('tech_card_text', $catalog->tech_card_text, 'Текст') !!}
+                <div class="catalog-image">
+                    <label for="tech_card_image">Изображение (660x390)</label>
+                    <input id="tech_card_image" type="file" name="tech_card_image"
+                           accept=".png,.jpg,.jpeg" onchange="return techCardImageAttache(this, event)">
+                    <div id="tech-card-block">
+                        @if ($catalog->tech_card_image)
+                            <img class="img-polaroid"
+                                 src="{{ \Fanky\Admin\Models\Catalog::UPLOAD_URL . $catalog->tech_card_image }}"
+                                 height="100"
+                                 data-image="{{ \Fanky\Admin\Models\Catalog::UPLOAD_URL . $catalog->tech_card_image }}"
+                                 onclick="return popupImage($(this).data('image'))" alt="image">
+                            <a class="images_del"
+                               href="{{ route('admin.catalog.techCardImageDelete', [$catalog->id]) }}"
+                               onclick="return techCardImageDel(this)">
+                                <span class="glyphicon glyphicon-trash text-red"></span>
+                            </a>
+                        @else
+                            <p class="text-yellow">Изображение не загружено.</p>
+                        @endif
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane" id="tab_file">
+                <div class="catalog-file">
+                    <label for="catalog-file">Файл договора</label>
+                    <input id="catalog-file" type="file" name="file"
+                           accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" onchange="return catalogFileAttach(this, event)">
+                    <div id="file-block">
+                        @if ($catalog->file)
+                            <a href="{{ \Fanky\Admin\Models\Catalog::UPLOAD_URL . $catalog->file }}"
+                               target="_blank" title="Открыть в новом окне">
+                                <img class="img-polaroid"
+                                     src="{{ \Fanky\Admin\Models\Catalog::FILE_IMAGE }}" height="100"
+                                     data-image="{{ \Fanky\Admin\Models\Catalog::FILE_IMAGE }}" alt="image">
+                            </a>
+                            <a class="images_del"
+                               href="{{ route('admin.catalog.catalogFileDelete', [$catalog->id]) }}"
+                               onclick="return catalogFileDelete(this)">
+                                <span class="glyphicon glyphicon-trash text-red"></span>
+                            </a>
+                        @else
+                            <p class="text-yellow">Изображение не загружено.</p>
+                        @endif
+                    </div>
+                </div>
             </div>
 
             <div class="box-footer">
@@ -132,7 +167,7 @@
 <script type="text/javascript">
     $(".images_list").sortable({
         update: function (event, ui) {
-            var url = "{{ route('admin.catalog.catalogGalleryImageOrder') }}";
+            var url = "{{ route('admin.catalog.catalogItemOrder') }}";
             var data = {};
             data.sorted = $('.images_list').sortable("toArray", {attribute: 'data-id'});
             sendAjax(url, data);

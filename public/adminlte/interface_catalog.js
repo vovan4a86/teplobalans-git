@@ -1,6 +1,7 @@
 let catalogImage = null;
-let catalogIcon = null;
+let catalogFile = null;
 var mass_images = [];
+let techCardImage = null;
 
 function catalogImageAttache(elem, e) {
     $.each(e.target.files, function (key, file) {
@@ -60,8 +61,11 @@ function catalogSave(form, e) {
     if (catalogImage) {
         data.append('image', catalogImage);
     }
-    if (catalogIcon) {
-        data.append('icon', catalogIcon);
+    if (techCardImage) {
+        data.append('tech_card_image', techCardImage);
+    }
+    if (catalogFile) {
+        data.append('file', catalogFile);
     }
 
     sendFiles(url, data, function (json) {
@@ -84,7 +88,8 @@ function catalogSave(form, e) {
         if (typeof json.msg != 'undefined') $(form).find('[type=submit]').after(autoHideMsg('green', urldecode(json.msg)));
         if (typeof json.success != 'undefined' && json.success === true) {
             catalogImage = null;
-            catalogIcon = null;
+            techCardImage = null;
+            catalogFile = null;
         }
         if (json.alert) $(form).find('[type=submit]').after(autoHideMsg('red', urldecode(json.alert)));
     });
@@ -103,40 +108,6 @@ function catalogDel(elem) {
         }
         if (json.alert) alert(urldecode(json.alert));
 
-    });
-    return false;
-}
-
-function catalogGalleryImageUpload(elem, e) {
-    var url = $(elem).data('url');
-    let files = e.target.files;
-    let data = new FormData();
-    $.each(files, function (key, value) {
-        if (value['size'] > max_file_size) {
-            alert('Слишком большой размер файла. Максимальный размер 10Мб');
-        } else {
-            data.append('images[]', value);
-        }
-    });
-    $(elem).val('');
-
-    sendFiles(url, data, function (json) {
-        if (typeof json.html != 'undefined') {
-            $('.images_list').append(urldecode(json.html));
-        }
-    });
-}
-
-function catalogGalleryImageDelete(elem) {
-    if (!confirm('Удалить изображение?')) return false;
-    var url = $(elem).attr('href');
-    sendAjax(url, {}, function (json) {
-        if (typeof json.msg != 'undefined') alert(urldecode(json.msg));
-        if (typeof json.success != 'undefined' && json.success === true) {
-            $(elem).closest('.images_item').fadeOut(300, function () {
-                $(this).remove();
-            });
-        }
     });
     return false;
 }
@@ -181,7 +152,7 @@ function productDel(elem) {
 
 function productImageUpload(elem, e) {
     var url = $(elem).data('url');
-    files = e.target.files;
+    let files = e.target.files;
     var data = new FormData();
     $.each(files, function (key, value) {
         if (value['size'] > max_file_size) {
@@ -225,6 +196,118 @@ function productImageDel(elem) {
         }
     });
     return false;
+}
+
+
+//catalog items
+function catalogItemsUpload(elem, e) {
+    var url = $(elem).data('url');
+    let files = e.target.files;
+    let data = new FormData();
+    $.each(files, function (key, value) {
+        if (value['size'] > max_file_size) {
+            alert('Слишком большой размер файла. Максимальный размер 10Мб');
+        } else {
+            data.append('items[]', value);
+        }
+    });
+    $(elem).val('');
+
+    sendFiles(url, data, function (json) {
+        if (typeof json.html != 'undefined') {
+            $('.images_list').append(urldecode(json.html));
+        }
+    });
+}
+
+function catalogItemDelete(elem) {
+    if (!confirm('Удалить изображение?')) return false;
+    var url = $(elem).attr('href');
+    sendAjax(url, {}, function (json) {
+        if (typeof json.msg != 'undefined') alert(urldecode(json.msg));
+        if (typeof json.success != 'undefined' && json.success === true) {
+            $(elem).closest('.images_item').fadeOut(300, function () {
+                $(this).remove();
+            });
+        }
+    });
+    return false;
+}
+
+function catalogItemEdit(elem, e){
+    e.preventDefault();
+    var url = $(elem).attr('href');
+    popupAjax(url);
+}
+
+function catalogItemDataSave(form, e){
+    e.preventDefault();
+    var url = $(form).attr('action');
+    var data = $(form).serialize();
+    sendAjax(url, data, function(json){
+        if (typeof json.success != 'undefined' && json.success == true) {
+            popupClose();
+        }
+    });
+}
+
+function techCardImageAttache(elem, e) {
+    $.each(e.target.files, function (key, file) {
+        if (file['size'] > max_file_size) {
+            alert('Слишком большой размер файла. Максимальный размер 10Мб');
+        } else {
+            techCardImage = file;
+            renderImage(file, function (imgSrc) {
+                let item = '<img class="img-polaroid" src="' + imgSrc + '" height="100" data-image="' + imgSrc + '" onclick="return popupImage($(this).data(\'image\'))" alt="">';
+                $('#tech-card-block').html(item);
+            });
+        }
+    });
+    $(elem).val('');
+}
+
+function techCardImageDel(elem) {
+    if (!confirm('Удалить изображение?')) return false;
+    let url = $(elem).attr('href');
+    sendAjax(url, {}, function (json) {
+        if (typeof json.msg != 'undefined') alert(urldecode(json.msg));
+        if (typeof json.success != 'undefined' && json.success === true) {
+            $(elem).closest('#tech-card-block').fadeOut(300, function () {
+                $(this).empty();
+            });
+        }
+    });
+    return false;
+}
+
+function catalogFileDelete(elem) {
+    if (!confirm('Удалить файл?')) return false;
+    let url = $(elem).attr('href');
+    sendAjax(url, {}, function (json) {
+        if (typeof json.msg != 'undefined') alert(urldecode(json.msg));
+        if (typeof json.success != 'undefined' && json.success === true) {
+            $(elem).closest('#file-block').fadeOut(300, function () {
+                $(this).empty();
+            });
+        }
+    });
+    return false;
+}
+
+function catalogFileAttach(elem, e) {
+    $.each(e.target.files, function (key, file) {
+        if (file['size'] > max_file_size) {
+            alert('Слишком большой размер файла. Максимальный размер 10Мб');
+        } else {
+            catalogFile = file;
+            renderImage(file, function () {
+                let item = '<img class="img-polaroid" src="/adminlte/document_small.png" height="100" ' +
+                    'data-image="/adminlte/document_small.png" onclick="return popupImage($(this).data(\'image\'))" alt="">';
+                $('#file-block').html(item);
+            });
+        }
+    });
+    $(elem).val('');
 }
 
 $(document).ready(function () {
@@ -279,7 +362,7 @@ $(document).ready(function () {
             }
         }
     }).bind("move_node.jstree", function (e, data) {
-        treeInst = $(this).jstree(true);
+        let treeInst = $(this).jstree(true);
         parent = treeInst.get_node(data.parent);
         var d = {
             'id': data.node.id,

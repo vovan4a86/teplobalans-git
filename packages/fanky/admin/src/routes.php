@@ -53,9 +53,6 @@ Route::group(['namespace' => 'Fanky\Admin\Controllers', 'prefix' => 'admin', 'as
 		Route::get('products/{id?}', $controller . 'getProducts')
 			->name('.products');
 
-        Route::post('is-custom-page/{id}', $controller . 'postIsCustomPage')
-            ->name('.is-custom-page');
-
 		Route::post('catalog-edit/{id?}', $controller . 'postCatalogEdit')
 			->name('.catalogEdit');
 
@@ -74,17 +71,26 @@ Route::group(['namespace' => 'Fanky\Admin\Controllers', 'prefix' => 'admin', 'as
         Route::post('catalog-image-delete/{id}', $controller . 'postCatalogImageDelete')
             ->name('.catalogImageDel');
 
-        Route::post('catalog-icon-delete/{id}', $controller . 'postCatalogIconDelete')
-            ->name('.catalogIconDel');
+        Route::post('catalog-items-upload/{id}', $controller . 'postCatalogItemsUpload')
+            ->name('.catalogItemsUpload');
 
-        Route::post('catalog-gallery-image-upload/{id}', $controller . 'postCatalogGalleryImageUpload')
-            ->name('.catalogGalleryImageUpload');
+        Route::post('catalog-item-delete/{id}', $controller . 'postCatalogItemDelete')
+            ->name('.catalogItemDelete');
 
-        Route::post('catalog-gallery-image-delete/{id}', $controller . 'postCatalogGalleryImageDelete')
-            ->name('.catalogGalleryImageDelete');
+        Route::post('catalog-item-order', $controller . 'postCatalogItemOrder')
+            ->name('.catalogItemOrder');
 
-        Route::post('catalog-gallery-image-order', $controller . 'postCatalogGalleryImageOrder')
-            ->name('.catalogGalleryImageOrder');
+        Route::post('catalog-item-data-save/{id}', $controller . 'postCatalogItemDataSave')
+            ->name('.catalogItemDataSave');
+
+        Route::post('catalog-item-edit/{id}', $controller . 'postCatalogItemEdit')
+            ->name('.catalogItemEdit');
+
+        Route::post('catalog-card-image-delete/{id}', $controller . 'postTechCardImageDelete')
+            ->name('.techCardImageDelete');
+
+        Route::post('catalog-file-delete/{id}', $controller . 'postCatalogFileDelete')
+            ->name('.catalogFileDelete');
 
         Route::post('product-image-delete/{id}', $controller . 'postProductImageDelete')
             ->name('.productImageDel');
