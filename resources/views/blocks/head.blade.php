@@ -37,7 +37,7 @@
     @endif
 
     <!--if homepage | pricePage | servicePage | contactsPage-->
-    @if(Route::is('main'))
+    @if(Route::is(['main', 'price', 'services.item', 'contacts']))
         <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU"></script>
     @endif
     <!-- endif-->

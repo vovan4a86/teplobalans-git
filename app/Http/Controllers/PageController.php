@@ -5,6 +5,7 @@ use App;
 use Cache;
 use Fanky\Admin\Models\Certificate;
 use Fanky\Admin\Models\City;
+use Fanky\Admin\Models\Gallery;
 use Fanky\Admin\Models\News;
 use Fanky\Admin\Models\Page;
 use Fanky\Admin\Models\PriceSection;
@@ -66,23 +67,22 @@ class PageController extends Controller
         $page->ogGenerate();
         $page->setSeo();
 
-        $about_features = S::get('about_features', []);
-        $vacancies = Vacancy::public()->orderBy('order')->get();
-        $projects = Project::public()->orderBy('order')->limit(2)->get();
-        $certificates = Certificate::orderBy('order')->get();
-        $news = News::public()->orderByDesc('date')
-            ->limit(S::get('about_news_per_page', 5))->get();
+        $clients = S::get('about_clients', []);
+        $projects = S::get('about_projects', []);
+        $foto_gallery = Gallery::whereCode('about_foto')->first();
+        $fotos = $foto_gallery->items;
+        $licenses_gallery = Gallery::whereCode('about_licenses')->first();
+        $licenses = $licenses_gallery->items;
+
 
         return view('pages.about', [
-            'page' => $page,
-            'text' => $page->text,
-            'h1' => $page->getH1(),
             'bread' => $bread,
-            'about_features' => $about_features,
-            'vacancies' => $vacancies,
+            'page' => $page,
+            'h1' => $page->getH1(),
+            'clients' => $clients,
             'projects' => $projects,
-            'certificates' => $certificates,
-            'news' => $news
+            'fotos' => $fotos,
+            'licenses' => $licenses,
         ]);
     }
 
