@@ -78,7 +78,8 @@
                     </div>
                 </div>
             </div>
-            <div class="cont-view__map" id="map-1" data-map="data-map" data-lat="56.813459" data-long="60.595167" data-hint="г. Екатеринбург, ул. Фрунзе, 96В, 3 этаж"></div>
+            <div class="cont-view__map" id="map-1" data-map="data-map" data-lat="56.813459"
+                 data-long="60.595167" data-hint="г. Екатеринбург, ул. Фрунзе, 96В, 3 этаж"></div>
         </div>
     </section>
 @stop

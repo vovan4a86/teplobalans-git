@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use App;
+use Cache;
 use Fanky\Admin\Models\Certificate;
 use Fanky\Admin\Models\City;
 use Fanky\Admin\Models\News;
@@ -99,23 +100,30 @@ class PageController extends Controller
             ->with(['items'])
             ->orderBy('order')->get();
 
-        $all_tabs = [];
 
-        foreach ($sections as $section) {
-            $new_section = '';
-            foreach ($section->items as $i => $elem) {
-                if($elem->price == '') {
-                    $new_section = $elem->name;
-                }
-                if($new_section !== $elem->name) {
-                    $all_tabs[$section->name][$new_section][] = [
-                        'name' => $elem->name,
-                        'price' => $elem->price
-                    ];
+
+        $all_tabs = Cache::get('all_tabs', collect());
+        if (!count($all_tabs)) {
+            $all_tabs = [];
+            //формируем таблицы с заголовками и без
+            //заголовок = name без цены
+            foreach ($sections as $section) {
+                $new_section = '';
+                foreach ($section->items as $i => $elem) {
+                    if($elem->price == '') {
+                        $new_section = $elem->name;
+                    }
+                    if($new_section !== $elem->name) {
+                        $all_tabs[$section->name][$new_section][] = [
+                            'name' => $elem->name,
+                            'price' => $elem->price
+                        ];
+                    }
                 }
             }
+
+            Cache::add('all_tabs', $all_tabs, now()->addMinutes(60));
         }
-//        dd($all_tabs);
 
         return view('pages.price', [
             'bread' => $bread,

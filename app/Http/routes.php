@@ -32,6 +32,7 @@ Route::group(
         Route::any('about/projects/{id}', ['as' => 'projects.item', 'uses' => 'ObjectsController@item']);
 
         Route::any('price', ['as' => 'price', 'uses' => 'PageController@price']);
+        Route::any('contacts', ['as' => 'contacts', 'uses' => 'PageController@contacts']);
 
         Route::any('policy', ['as' => 'policy', 'uses' => 'PageController@policy']);
         Route::any('agreement', ['as' => 'agreement', 'uses' => 'PageController@agreement']);
