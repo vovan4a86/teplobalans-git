@@ -5,6 +5,7 @@
             <div class="form-horizontal">
                 <div class="input-group">
                     <select name="id" onchange="this.form.submit()" class="form-control">
+                        <option value="">Выбрать</option>
                         @foreach ($sections as $item)
                             <option value="{{ $item->id }}"
                                     {!! Request::get('id') == $item->id? 'selected': '' !!}

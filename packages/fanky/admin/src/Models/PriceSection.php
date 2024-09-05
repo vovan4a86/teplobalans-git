@@ -22,9 +22,10 @@ class PriceSection extends Model {
 
     public $timestamps = false;
 
-    public function tables(): HasMany
+    public function items(): HasMany
     {
-        return $this->hasMany(PriceSectionTable::class)->orderBy('order');
+        return $this->hasMany(PriceSectionItem::class)
+            ->orderBy('order');
     }
 
 }

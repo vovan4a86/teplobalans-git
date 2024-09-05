@@ -42,42 +42,40 @@ function sectionSave(form){
 }
 
 function sectionDelete(elem){
-	if (!confirm('Удалить категорию со всеми рецептами?')) return false;
+	if (!confirm('Удалить раздел?')) return false;
 	var url = $(elem).data('url');
 	sendAjax(url, {}, function(json){
 		if (typeof json.success != 'undefined' && json.success == true) {
-			document.location.href = '/admin/recipies';
+			document.location.href = '/admin/prices';
 		}
 	});
 	return false;
 }
 
-// ***
-function sectionSaveOld(form, e){
+function addRow(link, e) {
 	e.preventDefault();
-
-	var url = $(form).attr('action');
-	var data = $(form).serialize();
-
-	sendAjax(url, data, function(json){
-		if (typeof json.errors != 'undefined') {
-			applyFormValidate(form, json.errors);
-			var errMsg = [];
-			for (var key in json.errors) { errMsg.push(json.errors[key]);  }
-			$(form).find('[type=submit]').after(autoHideMsg('red', urldecode(errMsg.join(' '))));
-		}
-		if (typeof json.redirect != 'undefined') document.location.href = urldecode(json.redirect);
-		if (typeof json.msg != 'undefined') $(form).find('[type=submit]').after(autoHideMsg('green', urldecode(json.msg)));
-	});
+	var container = $(link).prev();
+	var row = container.find('.row:last');
+	$newRow = $(document.createElement('div'));
+	$newRow.addClass('row row-params');
+	$newRow.html(row.html());
+	row.before($newRow);
 }
 
-function sectionDel(elem, e){
+function delRow(elem, e) {
 	e.preventDefault();
-	if (!confirm('Удалить отзыв?')) return false;
-	var url = $(elem).attr('href');
-	sendAjax(url, {}, function(json){
-		if (typeof json.success != 'undefined' && json.success == true) {
-			$(elem).closest('tr').fadeOut(300, function(){ $(this).remove(); });
+	if (!confirm('Удалить строку?')) return false;
+	$(elem).closest('.row').fadeOut(300, function(){ $(this).remove(); });
+}
+
+function saveTable(elem, e) {
+	e.preventDefault();
+	const url = $(elem).attr('action');
+	const data = $(elem).serialize();
+
+	sendAjax(url, data, function(json) {
+		if(json.success) {
+			alert('success');
 		}
 	});
 }

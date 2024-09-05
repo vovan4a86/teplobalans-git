@@ -19,7 +19,7 @@ class PriceSectionItem extends Model {
 
     public function section(): BelongsTo
     {
-        return $this->belongsTo(PriceSectionTable::class);
+        return $this->belongsTo(PriceSection::class);
     }
 
 }

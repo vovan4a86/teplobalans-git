@@ -176,8 +176,8 @@ Route::group(['namespace' => 'Fanky\Admin\Controllers', 'prefix' => 'admin', 'as
         Route::post('delete/{id}', $controller . 'postDelete')
             ->name('.del');
 
-        Route::post('delete-image/{id}', $controller . 'postDeleteImage')
-            ->name('.delImage');
+        Route::post('save-table', $controller . 'postSaveTable')
+            ->name('.saveTable');
     });
 
     Route::group(['as' => '.news', 'prefix' => 'news'], function () {
