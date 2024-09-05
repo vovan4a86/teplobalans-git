@@ -160,6 +160,26 @@ Route::group(['namespace' => 'Fanky\Admin\Controllers', 'prefix' => 'admin', 'as
 
 	});
 
+    Route::group(['as' => '.prices', 'prefix' => 'prices'], function () {
+        $controller = 'AdminPricesController@';
+        Route::get('/', $controller . 'getIndex');
+
+        Route::get('edit/{id?}', $controller . 'getEdit')
+            ->name('.edit');
+
+        Route::post('save', $controller . 'postSave')
+            ->name('.save');
+
+        Route::post('reorder', $controller . 'postReorder')
+            ->name('.reorder');
+
+        Route::post('delete/{id}', $controller . 'postDelete')
+            ->name('.del');
+
+        Route::post('delete-image/{id}', $controller . 'postDeleteImage')
+            ->name('.delImage');
+    });
+
     Route::group(['as' => '.news', 'prefix' => 'news'], function () {
         $controller = 'AdminNewsController@';
         Route::get('/', $controller . 'getIndex');
@@ -282,32 +302,6 @@ Route::group(['namespace' => 'Fanky\Admin\Controllers', 'prefix' => 'admin', 'as
             ->name('.delImage');
     });
 
-    Route::group(['as' => '.landing', 'prefix' => 'landing'], function () {
-        $controller = 'AdminLandingController@';
-        Route::get('/', $controller . 'getIndex');
-
-        Route::post('add-elem/{id}', $controller . 'postAddElem')
-            ->name('.add-elem');
-
-        Route::post('del-elem/{id}', $controller . 'postDelElem')
-            ->name('.del-elem');
-
-        Route::post('reorder', $controller . 'postReorder')
-            ->name('.reorder');
-
-        Route::post('edit/{id?}', $controller . 'postEdit')
-            ->name('.edit');
-
-        Route::post('save', $controller . 'postSave')
-            ->name('.save');
-
-        Route::post('delete/{id}', $controller . 'postDelete')
-            ->name('.del');
-
-        Route::post('delete-image/{id}', $controller . 'postDeleteImage')
-            ->name('.delImage');
-    });
-
     Route::group(['as' => '.orders', 'prefix' => 'orders'], function () {
 		$controller = 'AdminOrdersController@';
 		Route::get('/', $controller . 'getIndex');
@@ -363,31 +357,14 @@ Route::group(['namespace' => 'Fanky\Admin\Controllers', 'prefix' => 'admin', 'as
 	});
 
     Route::group(['as' => '.feedbacks', 'prefix' => 'feedbacks'], function () {
-		$controller = 'AdminFeedbacksController@';
-		Route::get('/', $controller . 'getIndex');
+        $controller = 'AdminFeedbacksController@';
+        Route::get('/', $controller . 'getIndex');
 
-		Route::post('read/{id?}',$controller . 'postRead')
-			->name('.read');
-		Route::post('delete/{id?}', $controller . 'postDelete')
-			->name('.del');
-	});
-
-    Route::group(['as' => '.cities', 'prefix' => 'cities'], function () {
-		$controller = 'AdminCitiesController@';
-		Route::get('/', $controller . 'getIndex');
-
-		Route::get('edit/{id?}', $controller . 'getEdit')
-			->name('.edit');
-
-		Route::post('delete/{id}', $controller . 'postDelete')
-			->name('.del');
-
-		Route::post('save', $controller . 'postSave')
-			->name('.save');
-
-		Route::post('tree/{id?}', $controller . 'postTree')
-			->name('.tree');
-	});
+        Route::post('read/{id?}',$controller . 'postRead')
+            ->name('.read');
+        Route::post('delete/{id?}', $controller . 'postDelete')
+            ->name('.del');
+    });
 
     Route::group(['as' => '.settings', 'prefix' => 'settings', 'middleware' => ['admin.fanky']], function () {
         $controller = 'AdminSettingsController@';
@@ -413,20 +390,6 @@ Route::group(['namespace' => 'Fanky\Admin\Controllers', 'prefix' => 'admin', 'as
 
         Route::post('edit-setting-save', $controller . 'postEditSettingSave')
             ->name('.editSave');
-
-        Route::post('save', $controller . 'postSave')
-            ->name('.save');
-    });
-
-    Route::group(['as' => '.redirects', 'prefix' => 'redirects', 'middleware' => ['admin.fanky']], function () {
-        $controller = 'AdminRedirectsController@';
-        Route::get('/', $controller . 'getIndex');
-
-        Route::get('edit/{id?}', $controller . 'getEdit')
-            ->name('.edit');
-
-        Route::get('delete/{id}', $controller . 'getDelete')
-            ->name('.delete');
 
         Route::post('save', $controller . 'postSave')
             ->name('.save');
