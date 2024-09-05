@@ -83,160 +83,39 @@
             </div>
         </div>
     </section>
-    <!--section.s-prods-->
-    <section class="s-prods">
-        <div class="s-prods__container container">
-            <div class="title">Продукция компании</div>
-            <div class="s-prods__grid">
-                <!--.card-prods-->
-                <div class="card-prods">
-                    <a class="card-prods__title" href="javascript:void(0)" title="ТБК-100">ТБК-100</a>
-                    <div class="card-prods__text">
-                        <p>Универсальный прибор для учёта тепловой энергии</p>
-                    </div>
-                    <div class="card-prods__actions">
-                        <a class="card-prods__link btn btn--red" href="javascript:void(0)" title="Перейти">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                      stroke-width="2" d="M7 17 17 7M7 7h10v10"/>
-                            </svg>
-                            <span>Перейти</span>
-                        </a>
-                    </div>
-                    <div class="card-prods__view">
-                        <img class="card-prods__pic no-select" src="/static/images/common/prods-1.png" width="343"
-                             height="293" alt="ТБК-100" loading="lazy"/>
-                    </div>
-                </div>
-                <!--.card-prods-->
-                <div class="card-prods">
-                    <a class="card-prods__title" href="javascript:void(0)" title="ТБР-200">ТБР-200</a>
-                    <div class="card-prods__text">
-                        <p>Электронный регулятор для систем автоматического регулирования тепловой энергии</p>
-                    </div>
-                    <div class="card-prods__actions">
-                        <a class="card-prods__link btn btn--red" href="javascript:void(0)" title="Перейти">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                      stroke-width="2" d="M7 17 17 7M7 7h10v10"/>
-                            </svg>
-                            <span>Перейти</span>
-                        </a>
-                    </div>
-                    <div class="card-prods__view">
-                        <img class="card-prods__pic no-select" src="/static/images/common/prods-2.png" width="343"
-                             height="293" alt="ТБР-200" loading="lazy"/>
-                    </div>
-                </div>
-                <!--.card-prods-->
-                <div class="card-prods">
-                    <a class="card-prods__title" href="javascript:void(0)" title="ТБН-300">ТБН-300</a>
-                    <div class="card-prods__text">
-                        <p>Контроллеры насосной станции</p>
-                    </div>
-                    <div class="card-prods__actions">
-                        <a class="card-prods__link btn btn--red" href="javascript:void(0)" title="Перейти">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                      stroke-width="2" d="M7 17 17 7M7 7h10v10"/>
-                            </svg>
-                            <span>Перейти</span>
-                        </a>
-                    </div>
-                    <div class="card-prods__view">
-                        <img class="card-prods__pic no-select" src="/static/images/common/prods-3.png" width="343"
-                             height="293" alt="ТБН-300" loading="lazy"/>
-                    </div>
+
+    @if(count($main_products))
+        <section class="s-prods">
+            <div class="s-prods__container container">
+                <div class="title">Продукция компании</div>
+                <div class="s-prods__grid">
+                    @foreach($main_products as $pr)
+                        <div class="card-prods">
+                            <a class="card-prods__title" href="{{ $pr['url'] }}" title="{{ $pr['name'] }}">{{ $pr['name'] }}</a>
+                            <div class="card-prods__text">
+                                <p>{{ $pr['desc'] }}</p>
+                            </div>
+                            <div class="card-prods__actions">
+                                <a class="card-prods__link btn btn--red" href="{{ $pr['url'] }}" title="Перейти">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                              stroke-width="2" d="M7 17 17 7M7 7h10v10"/>
+                                    </svg>
+                                    <span>Перейти</span>
+                                </a>
+                            </div>
+                            @if($img = $pr['img'])
+                                <div class="card-prods__view">
+                                    <img class="card-prods__pic no-select" src="{{ S::fileSrc($img) }}" width="343"
+                                         height="293" alt="{{ $pr['name'] }}" loading="lazy"/>
+                                </div>
+                            @endif
+                        </div>
+                    @endforeach
                 </div>
             </div>
-        </div>
-    </section>
-    <!--section.s-srv(class=(servicesPage && 'is-page'))-->
-    <section class="s-srv">
-        <div class="s-srv__container container">
-            <div class="title">Услуги компании</div>
-            <div class="s-srv__list">
-                <!--.card-srv-->
-                <div class="card-srv">
-                    <div class="card-srv__body">
-                        <div class="card-srv__title">Обслуживание коммерческих узлов учёта (УКУТ)</div>
-                        <div class="card-srv__text">
-                            <p>Сопровождение приборов учёта, мониторинг состояния узла учёта, и ведение коммерческой
-                                отчётности.</p>
-                        </div>
-                        <div class="card-srv__foot">
-                            <p>При необходимости, сдача и согласование узлов учёта в ЭСК.</p>
-                        </div>
-                        <div class="card-srv__actions">
-                            <a class="btn" href="javascript:void(0)" title="Подробнее">
-                                <span>Подробнее</span>
-                            </a>
-                        </div>
-                    </div>
-                    <!-- example sizing: 603x386-->
-                    <a class="card-srv__view lazy" data-bg="/static/images/common/srv-1.jpg" href="javascript:void(0)"
-                       title="Обслуживание коммерческих узлов учёта (УКУТ)"></a>
-                </div>
-                <!--.card-srv-->
-                <div class="card-srv">
-                    <div class="card-srv__body">
-                        <div class="card-srv__title">Система автоматического регулирования тепла (САРТ)</div>
-                        <div class="card-srv__text">
-                            <p>Внедрение и обслуживание автоматизированного погодного регулирования подачи тепла.</p>
-                        </div>
-                        <div class="card-srv__foot">
-                            <p>Комфорт для жителей, и заметная экономия денежных средств.</p>
-                        </div>
-                        <div class="card-srv__actions">
-                            <a class="btn" href="javascript:void(0)" title="Подробнее">
-                                <span>Подробнее</span>
-                            </a>
-                        </div>
-                    </div>
-                    <!-- example sizing: 603x386-->
-                    <a class="card-srv__view lazy" data-bg="/static/images/common/srv-2.jpg" href="javascript:void(0)"
-                       title="Система автоматического регулирования тепла (САРТ)"></a>
-                </div>
-                <!--.card-srv-->
-                <div class="card-srv">
-                    <div class="card-srv__body">
-                        <div class="card-srv__title">Поверка и ремонт оборудования</div>
-                        <div class="card-srv__text">
-                            <p>Сервисное сопровождение ранее установленного оборудования в авторизованном сервисном
-                                центре</p>
-                        </div>
-                        <div class="card-srv__foot">
-                            <p>по разумным ценам.</p>
-                        </div>
-                        <div class="card-srv__actions">
-                            <a class="btn" href="javascript:void(0)" title="Подробнее">
-                                <span>Подробнее</span>
-                            </a>
-                        </div>
-                    </div>
-                    <!-- example sizing: 603x386-->
-                    <a class="card-srv__view lazy" data-bg="/static/images/common/srv-3.jpg" href="javascript:void(0)"
-                       title="Поверка и ремонт оборудования"></a>
-                </div>
-                <!--.card-srv-->
-                <div class="card-srv">
-                    <div class="card-srv__body">
-                        <div class="card-srv__title">Проектирование, монтаж, и реконструкция УКУТ</div>
-                        <div class="card-srv__text">
-                            <p>Полное сопровождение на всех этапах работ: от проектирования, до монтажа и сдачи УКУТ
-                                в эксплуатацию ЭСО.</p>
-                        </div>
-                        <div class="card-srv__actions">
-                            <a class="btn" href="javascript:void(0)" title="Подробнее">
-                                <span>Подробнее</span>
-                            </a>
-                        </div>
-                    </div>
-                    <!-- example sizing: 603x386-->
-                    <a class="card-srv__view lazy" data-bg="/static/images/common/srv-4.jpg" href="javascript:void(0)"
-                       title="Проектирование, монтаж, и реконструкция УКУТ"></a>
-                </div>
-            </div>
-        </div>
-    </section>
+        </section>
+    @endif
+
+    @include('pages.blocks.services', ['title' => 'Услуги компании', 'class' => ''])
 @stop

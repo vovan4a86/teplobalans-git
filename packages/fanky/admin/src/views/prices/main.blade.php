@@ -31,9 +31,9 @@
                             <i class="fa fa-ellipsis-v"></i>
                             <i class="fa fa-ellipsis-v"></i>
                         </div>
-                        {!! Form::text('params[name][]',$param->name, ['class'=>'form-control', 'placeholder' => 'Название']) !!}
-                        {!! Form::text('params[value][]',$param->value, ['class'=>'form-control', 'placeholder' => 'Цена']) !!}
-                        <div style="width: 150px;">
+                        {!! Form::text('params[name][]',$param->name, ['class'=>'form-control f-row', 'placeholder' => 'Название']) !!}
+                        {!! Form::text('params[value][]',$param->price, ['class'=>'form-control s-row', 'placeholder' => 'Цена']) !!}
+                        <div style="width: 100px;">
                             <a href="#" onclick="delRow(this, event)" class="text-red">
                                 <i class="fa fa-trash"></i>Удалить</a>
                         </div>
@@ -45,17 +45,19 @@
                         <i class="fa fa-ellipsis-v"></i>
                         <i class="fa fa-ellipsis-v"></i>
                     </div>
-                    {!! Form::text('params[name][]','', ['class'=>'form-control', 'placeholder' => 'Название']) !!}
-                    {!! Form::text('params[value][]','', ['class'=>'form-control', 'placeholder' => 'Цена']) !!}
-                    <div style="width: 150px;">
+                    {!! Form::text('params[name][]','', ['class'=>'form-control f-row', 'placeholder' => 'Название без цены = заголовок секции']) !!}
+                    {!! Form::text('params[value][]','', ['class'=>'form-control s-row', 'placeholder' => 'Цена']) !!}
+                    <div style="width: 100px;">
                         <a href="#" onclick="delRow(this, event)" class="text-red">
                             <i class="fa fa-trash"></i>Удалить</a>
                     </div>
                 </div>
             </div>
             @if(Request::get('id') > 0)
-                <button class="btn btn-sm" href="#" onclick="addRow(this, event)">Добавить</button>
-                <button class="btn btn-sm btn-success" type="submit">Сохранить</button>
+                <div class="footer">
+                    <button class="btn btn-sm" href="#" onclick="addRow(this, event)">Добавить</button>
+                    <button class="btn btn-sm btn-success" type="submit">Сохранить</button>
+                </div>
             @else
                 <div>Необходимо выбрать раздел.</div>
             @endif
@@ -78,8 +80,22 @@
                     align-items: center;
                 }
 
+                .f-row {
+                    width: 90%;
+                }
+
+                .s-row {
+                    width: 10%;
+                }
+
                 .row-params input {
                     margin-right: 15px;
+                }
+
+                .footer {
+                    padding: 10px 0;
+                    border-top: 1px dotted grey;
+                    margin-top: 20px;
                 }
             </style>
         </div>

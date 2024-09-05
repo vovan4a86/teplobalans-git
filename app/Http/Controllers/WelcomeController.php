@@ -30,12 +30,16 @@ class WelcomeController extends Controller {
         }
 
         $main_slider = S::get('main_slider', []);
+        $main_products = S::get('main_products', []);
+        $services = Catalog::public()->orderBy('order')->get();
 
         return response()->view('pages.index', [
             'page' => $page,
             'text' => $page->text,
             'h1' => $page->getH1(),
             'main_slider' => $main_slider,
+            'main_products' => $main_products,
+            'services' => $services
         ]);
     }
 }

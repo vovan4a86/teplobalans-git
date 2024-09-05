@@ -74,7 +74,10 @@ class AdminPricesController extends AdminController
     public function postDelete($id)
     {
         $section = PriceSection::find($id);
-        $section->delete();
+        if($section) {
+            PriceSectionItem::where('price_section_id', $id)->delete();
+            $section->delete();
+        }
 
         return ['success' => true];
     }
@@ -110,6 +113,6 @@ class AdminPricesController extends AdminController
             ->where('updated_at', '<', $start_update)
             ->delete();
 
-        return ['success' => true];
+        return ['success' => true, 'msg' => 'Изменения сохранены'];
     }
 }

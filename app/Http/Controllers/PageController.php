@@ -1,10 +1,12 @@
-<?php namespace App\Http\Controllers;
+<?php
+namespace App\Http\Controllers;
 
 use App;
 use Fanky\Admin\Models\Certificate;
 use Fanky\Admin\Models\City;
 use Fanky\Admin\Models\News;
 use Fanky\Admin\Models\Page;
+use Fanky\Admin\Models\PriceSection;
 use Fanky\Admin\Models\Product;
 use Fanky\Admin\Models\Project;
 use Fanky\Admin\Models\SearchIndex;
@@ -16,7 +18,8 @@ use S;
 use SiteHelper;
 use View;
 
-class PageController extends Controller {
+class PageController extends Controller
+{
 
     public function page($alias = null): Response
     {
@@ -55,13 +58,14 @@ class PageController extends Controller {
     public function about()
     {
         $page = Page::whereAlias('about')->first();
-        if (!$page)
+        if (!$page) {
             abort(404, 'Страница не найдена');
+        }
         $bread = $page->getBread();
         $page->ogGenerate();
         $page->setSeo();
 
-        $about_features = S::get('about_features',[]);
+        $about_features = S::get('about_features', []);
         $vacancies = Vacancy::public()->orderBy('order')->get();
         $projects = Project::public()->orderBy('order')->limit(2)->get();
         $certificates = Certificate::orderBy('order')->get();
@@ -71,7 +75,7 @@ class PageController extends Controller {
         return view('pages.about', [
             'page' => $page,
             'text' => $page->text,
-            'h1'    => $page->getH1(),
+            'h1' => $page->getH1(),
             'bread' => $bread,
             'about_features' => $about_features,
             'vacancies' => $vacancies,
@@ -81,11 +85,51 @@ class PageController extends Controller {
         ]);
     }
 
+    public function price()
+    {
+        $page = Page::whereAlias('price')->first();
+        if (!$page) {
+            abort(404, 'Страница не найдена');
+        }
+        $bread = $page->getBread();
+        $page->ogGenerate();
+        $page->setSeo();
+
+        $sections = PriceSection::query()
+            ->with(['items'])
+            ->orderBy('order')->get();
+
+        $all_tabs = [];
+
+        foreach ($sections as $section) {
+            $new_section = '';
+            foreach ($section->items as $i => $elem) {
+                if($elem->price == '') {
+                    $new_section = $elem->name;
+                }
+                if($new_section !== $elem->name) {
+                    $all_tabs[$section->name][$new_section][] = [
+                        'name' => $elem->name,
+                        'price' => $elem->price
+                    ];
+                }
+            }
+        }
+//        dd($all_tabs);
+
+        return view('pages.price', [
+            'bread' => $bread,
+            'h1' => $page->getH1(),
+            'all_tabs' => $all_tabs
+        ]);
+    }
+
     public function contacts()
     {
         $page = Page::whereAlias('contacts')->first();
-        if (!$page)
+        if (!$page) {
             abort(404, 'Страница не найдена');
+        }
         $bread = $page->getBread();
         $page->ogGenerate();
         $page->setSeo();
@@ -95,7 +139,7 @@ class PageController extends Controller {
         return view('pages.contacts', [
             'page' => $page,
             'text' => $page->text,
-            'h1'    => $page->getH1(),
+            'h1' => $page->getH1(),
             'bread' => $bread,
             'contacts' => $contacts
         ]);
@@ -104,8 +148,9 @@ class PageController extends Controller {
     public function policy()
     {
         $page = Page::whereAlias('policy')->first();
-        if (!$page)
+        if (!$page) {
             abort(404, 'Страница не найдена');
+        }
         $bread = $page->getBread();
         $page->ogGenerate();
         $page->setSeo();
@@ -113,7 +158,7 @@ class PageController extends Controller {
         return view('pages.text', [
             'page' => $page,
             'text' => $page->text,
-            'h1'    => $page->getH1(),
+            'h1' => $page->getH1(),
             'bread' => $bread
         ]);
     }
@@ -121,8 +166,9 @@ class PageController extends Controller {
     public function agreement()
     {
         $page = Page::whereAlias('user_agreement')->first();
-        if (!$page)
+        if (!$page) {
             abort(404, 'Страница не найдена');
+        }
         $bread = $page->getBread();
         $page->ogGenerate();
         $page->setSeo();
@@ -130,12 +176,13 @@ class PageController extends Controller {
         return view('pages.text', [
             'page' => $page,
             'text' => $page->text,
-            'h1'    => $page->getH1(),
+            'h1' => $page->getH1(),
             'bread' => $bread
         ]);
     }
 
-    public function search() {
+    public function search()
+    {
         \View::share('canonical', route('search'));
         $q = Request::get('q', '');
 
@@ -181,7 +228,8 @@ class PageController extends Controller {
         ]);
     }
 
-    public function robots() {
+    public function robots()
+    {
         $robots = new App\Robots();
         if (App::isLocal()) {
             $robots->addUserAgent('*');

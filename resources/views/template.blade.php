@@ -25,157 +25,61 @@
     @yield('content')
 </main>
 
-@if(Route::is(['main', 'prices', 'services.item']))
 <!--if homepage | pricePage | servicePage-->
-<section class="s-usr">
-    <div class="s-usr__container container">
-        <div class="title">С кем можно связаться через сайт</div>
-        <div class="s-usr__grid">
-            <!--.card-usr-->
-            <div class="card-usr">
-                <div class="card-usr__view">
-                    <img class="card-usr__img" src="static/images/common/usr-1.jpg" alt="Дрокин Сергей Анатольевич" width="272" height="261" loading="lazy" />
-                </div>
-                <div class="card-usr__body">
-                    <div class="card-usr__naming">
-                        <div class="card-usr__name">Дрокин Сергей Анатольевич</div>
-                        <div class="card-usr__job">Руководитель отдела энергомониторинга</div>
-                    </div>
-                    <a class="card-usr__phone" href="tel:+73432883055" title="Позвонить нам">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none">
-                            <g clip-path="url(#a)">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16.5 12.69v2.25a1.499 1.499 0 0 1-1.635 1.5 14.843 14.843 0 0 1-6.472-2.302 14.625 14.625 0 0 1-4.5-4.5A14.842 14.842 0 0 1 1.59 3.135 1.5 1.5 0 0 1 3.083 1.5h2.25a1.5 1.5 0 0 1 1.5 1.29 9.63 9.63 0 0 0 .525 2.108A1.5 1.5 0 0 1 7.02 6.48l-.952.953a12 12 0 0 0 4.5 4.5l.952-.953a1.5 1.5 0 0 1 1.582-.337c.681.253 1.388.43 2.108.525a1.5 1.5 0 0 1 1.29 1.522Z"
-                                />
-                            </g>
-                            <defs>
-                                <clipPath id="a">
-                                    <path fill="#fff" d="M0 0h18v18H0z" />
-                                </clipPath>
-                            </defs>
-                        </svg>
-                        <span class="card-usr__phone-label">+7 343 288-30-55</span>
-                        <span class="card-usr__phone-add">доб.: 309</span>
-                    </a>
-                    <div class="card-usr__actions">
-                        <btn class="btn btn--red btn-reset" type="button" data-popup="data-popup" data-src="#request" data-name="Дрокин Сергей Анатольевич" aria-label="Задать вопрос">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 17 17 7M7 7h10v10" />
-                            </svg>
-                            <span>Задать вопрос</span>
-                        </btn>
-                    </div>
-                </div>
-            </div>
-            <!--.card-usr-->
-            <div class="card-usr">
-                <div class="card-usr__view">
-                    <img class="card-usr__img" src="static/images/common/usr-2.jpg" alt="Рычкова Оксана Владимировна" width="272" height="261" loading="lazy" />
-                </div>
-                <div class="card-usr__body">
-                    <div class="card-usr__naming">
-                        <div class="card-usr__name">Рычкова Оксана Владимировна</div>
-                        <div class="card-usr__job">Руководитель отдела энергомониторинга</div>
-                    </div>
-                    <a class="card-usr__phone" href="tel:+73432883055" title="Позвонить нам">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none">
-                            <g clip-path="url(#a)">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16.5 12.69v2.25a1.499 1.499 0 0 1-1.635 1.5 14.843 14.843 0 0 1-6.472-2.302 14.625 14.625 0 0 1-4.5-4.5A14.842 14.842 0 0 1 1.59 3.135 1.5 1.5 0 0 1 3.083 1.5h2.25a1.5 1.5 0 0 1 1.5 1.29 9.63 9.63 0 0 0 .525 2.108A1.5 1.5 0 0 1 7.02 6.48l-.952.953a12 12 0 0 0 4.5 4.5l.952-.953a1.5 1.5 0 0 1 1.582-.337c.681.253 1.388.43 2.108.525a1.5 1.5 0 0 1 1.29 1.522Z"
-                                />
-                            </g>
-                            <defs>
-                                <clipPath id="a">
-                                    <path fill="#fff" d="M0 0h18v18H0z" />
-                                </clipPath>
-                            </defs>
-                        </svg>
-                        <span class="card-usr__phone-label">+7 343 288-30-55</span>
-                        <span class="card-usr__phone-add">доб.: 309</span>
-                    </a>
-                    <div class="card-usr__actions">
-                        <btn class="btn btn--red btn-reset" type="button" data-popup="data-popup" data-src="#request" data-name="Рычкова Оксана Владимировна" aria-label="Задать вопрос">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 17 17 7M7 7h10v10" />
-                            </svg>
-                            <span>Задать вопрос</span>
-                        </btn>
-                    </div>
+@if(Route::is(['main', 'price', 'services.item']))
+    @if($workers = S::get('main_site_workers'))
+        <section class="s-usr">
+            <div class="s-usr__container container">
+                <div class="title">С кем можно связаться через сайт</div>
+                <div class="s-usr__grid">
+                    @foreach($workers as $worker)
+                        <div class="card-usr">
+                            @if($worker['photo'])
+                                <div class="card-usr__view">
+                                    <img class="card-usr__img" src="{{ S::fileSrc($worker['photo']) }}"
+                                         alt="{{ $worker['name'] }}" width="272" height="261" loading="lazy" />
+                                </div>
+                            @endif
+                            <div class="card-usr__body">
+                                <div class="card-usr__naming">
+                                    <div class="card-usr__name">{{ $worker['name'] }}</div>
+                                    <div class="card-usr__job">{{ $worker['job'] }}</div>
+                                </div>
+                                <a class="card-usr__phone" href="tel:{{ SiteHelper::clearPhone($worker['phone']) }}" title="Позвонить нам">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none">
+                                        <g clip-path="url(#a)">
+                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16.5 12.69v2.25a1.499 1.499 0 0 1-1.635 1.5 14.843 14.843 0 0 1-6.472-2.302 14.625 14.625 0 0 1-4.5-4.5A14.842 14.842 0 0 1 1.59 3.135 1.5 1.5 0 0 1 3.083 1.5h2.25a1.5 1.5 0 0 1 1.5 1.29 9.63 9.63 0 0 0 .525 2.108A1.5 1.5 0 0 1 7.02 6.48l-.952.953a12 12 0 0 0 4.5 4.5l.952-.953a1.5 1.5 0 0 1 1.582-.337c.681.253 1.388.43 2.108.525a1.5 1.5 0 0 1 1.29 1.522Z"
+                                            />
+                                        </g>
+                                        <defs>
+                                            <clipPath id="a">
+                                                <path fill="#fff" d="M0 0h18v18H0z" />
+                                            </clipPath>
+                                        </defs>
+                                    </svg>
+                                    <span class="card-usr__phone-label">{{ $worker['phone'] }}</span>
+                                    @if($dob = $worker['dob'])
+                                        <span class="card-usr__phone-add">доб.: {{ $dob }}</span>
+                                    @endif
+                                </a>
+                                <div class="card-usr__actions">
+                                    <btn class="btn btn--red btn-reset" type="button" data-popup="data-popup" data-src="#request"
+                                         data-name="{{ $worker['name'] }}" aria-label="Задать вопрос">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none">
+                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 17 17 7M7 7h10v10" />
+                                        </svg>
+                                        <span>Задать вопрос</span>
+                                    </btn>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
                 </div>
             </div>
-            <!--.card-usr-->
-            <div class="card-usr">
-                <div class="card-usr__view">
-                    <img class="card-usr__img" src="static/images/common/usr-3.jpg" alt="Дрокин Сергей Анатольевич" width="272" height="261" loading="lazy" />
-                </div>
-                <div class="card-usr__body">
-                    <div class="card-usr__naming">
-                        <div class="card-usr__name">Дрокин Сергей Анатольевич</div>
-                        <div class="card-usr__job">Руководитель отдела энергомониторинга</div>
-                    </div>
-                    <a class="card-usr__phone" href="tel:+73432883055" title="Позвонить нам">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none">
-                            <g clip-path="url(#a)">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16.5 12.69v2.25a1.499 1.499 0 0 1-1.635 1.5 14.843 14.843 0 0 1-6.472-2.302 14.625 14.625 0 0 1-4.5-4.5A14.842 14.842 0 0 1 1.59 3.135 1.5 1.5 0 0 1 3.083 1.5h2.25a1.5 1.5 0 0 1 1.5 1.29 9.63 9.63 0 0 0 .525 2.108A1.5 1.5 0 0 1 7.02 6.48l-.952.953a12 12 0 0 0 4.5 4.5l.952-.953a1.5 1.5 0 0 1 1.582-.337c.681.253 1.388.43 2.108.525a1.5 1.5 0 0 1 1.29 1.522Z"
-                                />
-                            </g>
-                            <defs>
-                                <clipPath id="a">
-                                    <path fill="#fff" d="M0 0h18v18H0z" />
-                                </clipPath>
-                            </defs>
-                        </svg>
-                        <span class="card-usr__phone-label">+7 343 288-30-55</span>
-                        <span class="card-usr__phone-add">доб.: 309</span>
-                    </a>
-                    <div class="card-usr__actions">
-                        <btn class="btn btn--red btn-reset" type="button" data-popup="data-popup" data-src="#request" data-name="Дрокин Сергей Анатольевич" aria-label="Задать вопрос">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 17 17 7M7 7h10v10" />
-                            </svg>
-                            <span>Задать вопрос</span>
-                        </btn>
-                    </div>
-                </div>
-            </div>
-            <!--.card-usr-->
-            <div class="card-usr">
-                <div class="card-usr__view">
-                    <img class="card-usr__img" src="static/images/common/usr-4.jpg" alt="Рычкова Оксана Владимировна" width="272" height="261" loading="lazy" />
-                </div>
-                <div class="card-usr__body">
-                    <div class="card-usr__naming">
-                        <div class="card-usr__name">Рычкова Оксана Владимировна</div>
-                        <div class="card-usr__job">Руководитель отдела энергомониторинга</div>
-                    </div>
-                    <a class="card-usr__phone" href="tel:+73432883055" title="Позвонить нам">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none">
-                            <g clip-path="url(#a)">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16.5 12.69v2.25a1.499 1.499 0 0 1-1.635 1.5 14.843 14.843 0 0 1-6.472-2.302 14.625 14.625 0 0 1-4.5-4.5A14.842 14.842 0 0 1 1.59 3.135 1.5 1.5 0 0 1 3.083 1.5h2.25a1.5 1.5 0 0 1 1.5 1.29 9.63 9.63 0 0 0 .525 2.108A1.5 1.5 0 0 1 7.02 6.48l-.952.953a12 12 0 0 0 4.5 4.5l.952-.953a1.5 1.5 0 0 1 1.582-.337c.681.253 1.388.43 2.108.525a1.5 1.5 0 0 1 1.29 1.522Z"
-                                />
-                            </g>
-                            <defs>
-                                <clipPath id="a">
-                                    <path fill="#fff" d="M0 0h18v18H0z" />
-                                </clipPath>
-                            </defs>
-                        </svg>
-                        <span class="card-usr__phone-label">+7 343 288-30-55</span>
-                        <span class="card-usr__phone-add">доб.: 309</span>
-                    </a>
-                    <div class="card-usr__actions">
-                        <btn class="btn btn--red btn-reset" type="button" data-popup="data-popup" data-src="#request" data-name="Рычкова Оксана Владимировна" aria-label="Задать вопрос">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 17 17 7M7 7h10v10" />
-                            </svg>
-                            <span>Задать вопрос</span>
-                        </btn>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+        </section>
+    @endif
 
-<section class="s-cont">
+    <section class="s-cont">
     <div class="s-cont__container">
         <div class="s-cont__body">
             <div class="s-cont__heading">

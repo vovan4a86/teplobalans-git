@@ -42,7 +42,7 @@ function sectionSave(form){
 }
 
 function sectionDelete(elem){
-	if (!confirm('Удалить раздел?')) return false;
+	if (!confirm('Удалить раздел со всеми полями?')) return false;
 	var url = $(elem).data('url');
 	sendAjax(url, {}, function(json){
 		if (typeof json.success != 'undefined' && json.success == true) {
@@ -54,7 +54,8 @@ function sectionDelete(elem){
 
 function addRow(link, e) {
 	e.preventDefault();
-	var container = $(link).prev();
+	// var container = $(link).prev();
+	var container = $('.rows');
 	var row = container.find('.row:last');
 	$newRow = $(document.createElement('div'));
 	$newRow.addClass('row row-params');
@@ -75,7 +76,9 @@ function saveTable(elem, e) {
 
 	sendAjax(url, data, function(json) {
 		if(json.success) {
-			alert('success');
+			$(elem).find('[type=submit]').after(autoHideMsg('green', json.msg));
+		} else {
+			$(elem).find('[type=submit]').after(autoHideMsg('red', 'Изменения не сохранены'));
 		}
 	});
 }
