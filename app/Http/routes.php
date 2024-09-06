@@ -7,13 +7,9 @@ Route::get('robots.txt', 'PageController@robots')->name('robots');
 Route::group(
     ['prefix' => 'ajax', 'as' => 'ajax.'],
     function () {
-        Route::post('drawing-request', 'AjaxController@postSendDrawingRequest')->name('drawing-request');
-        Route::post('consultation', 'AjaxController@postSendConsultation')->name('consultation');
-        Route::post('product-request', 'AjaxController@postSendProductRequest')->name('product-request');
-
-        Route::post('change-city/{id?}', 'AjaxController@postChangeCity')->name('change-city');
-        Route::post('set-default-city', 'AjaxController@postSetDefaultCity')->name('set-default-city');
-        Route::post('get-correct-region-link', 'AjaxController@postGetCorrectRegionLink')->name('get-correct-region-link');
+        Route::post('request', 'AjaxController@postSendRequest')->name('request');
+        Route::post('vacancy', 'AjaxController@postSendVacancy')->name('vacancy');
+        Route::post('project', 'AjaxController@postSendProject')->name('project');
     }
 );
 

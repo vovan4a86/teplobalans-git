@@ -5,13 +5,13 @@
         <section class="s-vacancy">
             @foreach($items as $item)
                 <div class="s-vacancy__item">
-                    <a class="s-vacancy__view" href="{{ $item->url }}" title="{{ $item->title }}">
+                    <a class="s-vacancy__view" href="{{ $item->url }}" title="{{ $item->name }}">
                         <img class="s-vacancy__img" src="{{ $item->thumb(2) }}"
-                             width="430" height="260" alt="{{ $item->title }}" loading="lazy"/>
+                             width="430" height="260" alt="{{ $item->name }}" loading="lazy"/>
                     </a>
                     <div class="s-vacancy__body">
                         <div class="s-vacancy__head">
-                            <div class="s-vacancy__title">{{ $item->title }}</div>
+                            <div class="s-vacancy__title">{{ $item->name }}</div>
                             <div class="s-vacancy__text">
                                 <p>{{ $item->getAnnounce() }}</p>
                             </div>
@@ -37,7 +37,7 @@
                         </div>
                         <div class="s-vacancy__actions">
                             <button class="s-vacancy__btn btn-reset" type="button" data-popup="data-popup"
-                                    data-src="#vacancy" data-job="{{ $item->title }}" aria-label="Откликнуться">
+                                    data-src="#vacancy" data-job="{{ $item->name }}" aria-label="Откликнуться">
                                 <span>Откликнуться</span>
                             </button>
                             <a class="s-vacancy__btn s-vacancy__btn--outlined" href="{{ $item->url }}"

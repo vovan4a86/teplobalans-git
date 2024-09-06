@@ -42,8 +42,8 @@ class VacanciesController extends Controller {
         ]);
 	}
 
-	public function item($alias) {
-		$item = Review::whereAlias($alias)->public()->first();
+	public function item($id) {
+		$item = Vacancy::whereId($id)->public()->first();
         if (!$item) abort(404);
 
         $bread = $this->bread;
@@ -54,14 +54,14 @@ class VacanciesController extends Controller {
 
         Auth::init();
         if (Auth::user() && Auth::user()->isAdmin) {
-            View::share('admin_edit_link', route('admin.reviews.edit', [$item->id]));
+            View::share('admin_edit_link', route('admin.vacancies.edit', [$item->id]));
         }
 
-		return view('news.item', [
-			'article'        => $item,
+		return view('vacancies.item', [
+            'bread'       => $bread,
             'h1'          => $item->getH1(),
-			'text'        => $item->text,
-            'bread' => $bread
+            'text'        => $item->text,
+            'item'        => $item,
         ]);
 	}
 }

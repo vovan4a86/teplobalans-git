@@ -1,4 +1,4 @@
-<form class="popup" id="request" action="/" style="display: none">
+<form class="popup" id="request" action="{{ route('ajax.request') }}" style="display: none">
     <input type="hidden" name="service" data-service-field>
     <div class="popup__container">
         <div class="popup__heading">
@@ -18,7 +18,7 @@
             </div>
             <div class="popup__row">
                 <label class="user-input">
-                    <textarea class="user-input__field" rows="2" required></textarea>
+                    <textarea class="user-input__field" name="text" rows="2" required></textarea>
                     <span class="user-input__label">Ваше сообщение</span>
                 </label>
             </div>
@@ -29,12 +29,13 @@
             </button>
         </div>
         <div class="popup__policy">Отправляя форму, Вы соглашаетесь с
-            <a href="javascript:void(0)">политикой конфиденциальности</a>
+            <a href="{{ route('policy') }}">политикой конфиденциальности</a>
         </div>
     </div>
 </form>
-<form class="popup" id="vacancy" action="/" style="display: none">
-    <input type="hidden" name="service" data-service-field>
+
+<form class="popup" id="vacancy" action="{{ route('ajax.vacancy') }}" style="display: none">
+    <input type="hidden" name="job" data-service-field>
     <div class="popup__container">
         <div class="popup__heading">
             <div class="popup__title">Интересная вакансия?</div>
@@ -53,7 +54,7 @@
             </div>
             <div class="popup__row">
                 <label class="user-input">
-                    <textarea class="user-input__field" rows="2" required></textarea>
+                    <textarea class="user-input__field" name="text" rows="2" required></textarea>
                     <span class="user-input__label">Ваше сообщение</span>
                 </label>
             </div>
@@ -70,11 +71,12 @@
             </button>
         </div>
         <div class="popup__policy">Отправляя форму, Вы соглашаетесь с
-            <a href="javascript:void(0)">политикой конфиденциальности</a>
+            <a href="{{ route('policy') }}">политикой конфиденциальности</a>
         </div>
     </div>
 </form>
-<form class="popup" id="project" action="/" style="display: none">
+
+<form class="popup" id="project" action="{{ route('ajax.project') }}" style="display: none">
     <div class="popup__container">
         <div class="popup__heading">
             <div class="popup__title">Расскажите о проекте</div>
@@ -93,7 +95,7 @@
             </div>
             <div class="popup__row">
                 <label class="user-input">
-                    <textarea class="user-input__field" rows="2" required></textarea>
+                    <textarea class="user-input__field" name="text" rows="2" required></textarea>
                     <span class="user-input__label">Ваше сообщение</span>
                 </label>
             </div>
@@ -110,10 +112,11 @@
             </button>
         </div>
         <div class="popup__policy">Отправляя форму, Вы соглашаетесь с
-            <a href="javascript:void(0)">политикой конфиденциальности</a>
+            <a href="{{ route('policy') }}">политикой конфиденциальности</a>
         </div>
     </div>
 </form>
+
 <div class="popup" id="request-done" style="display: none">
     <div class="popup__container">
         <div class="popup__heading">

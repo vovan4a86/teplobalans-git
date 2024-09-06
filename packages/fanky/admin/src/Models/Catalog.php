@@ -355,40 +355,6 @@ class Catalog extends Model
         return $ids;
     }
 
-    public function getRecurseChildrenIdsInner(self $parent = null): array
-    {
-        if (!$parent) {
-            $parent = $this;
-        }
-        return self::query()->where('slug', 'like', $parent->slug)
-            ->pluck('id')->all();
-    }
-
-    public function getRecurseProductsCount(): string
-    {
-        return Cache::remember(
-            'product_count_' . $this->id,
-            env('CACHE_TIME', 60),
-            function () {
-                $ids = $this->getRecurseChildrenIds();
-                return Product::whereIn('catalog_id', $ids)->public()->count();
-            }
-        );
-    }
-
-    public function getRecurseProductsCountWithEnd(): string
-    {
-        $count = Cache::remember(
-            'product_count_' . $this->id,
-            env('CACHE_TIME', 60),
-            function () {
-                $ids = $this->getRecurseChildrenIds();
-                return Product::whereIn('catalog_id', $ids)->public()->count();
-            }
-        );
-        return $count . ' ' . SiteHelper::getNumEnding($count, ['товар', 'товара', 'товаров']);
-    }
-
     public function getH1(): string
     {
         return $this->h1 ?: $this->name;
@@ -401,13 +367,6 @@ class Catalog extends Model
         }
 
         return $this->_has_children;
-    }
-
-    public function updateProductCount()
-    {
-        $ids = $this->getRecurseChildrenIds();
-        $count = Product::whereIn('catalog_id', $ids)->public()->count();
-        $this->update(['product_count' => $count]);
     }
 
     public function generateTitle()
@@ -424,64 +383,9 @@ class Catalog extends Model
         }
     }
 
-    public function getLastModified(): Carbon
-    {
-        /** @var Carbon $updated */
-        $updated = $this->updated_at;
-        $catalog_ids = self::getRecurseCategory($this->id);
-        $catalog_ids[] = $this->id;
-        $product_updated = Product::whereIn('catalog_id', $catalog_ids)->max('updated_at');
-        if ($product_updated) {
-            $product_updated = Carbon::createFromFormat("Y-m-d H:i:s", $product_updated, 'Asia/Yekaterinburg');
-            return ($updated->gt($product_updated)) ? $updated : $product_updated;
-        } else {
-            return $updated;
-        }
-    }
-
-    public function getProducts()
-    {
-        return $this->products()
-            ->orderBy('order')
-            ->with(['catalog', 'image'])
-            ->get();
-    }
-
-    public function getRecurseProducts()
-    {
-        $ids = self::getRecurseChildrenIds();
-        return Product::public()->whereIn('catalog_id', $ids)
-            ->orderBy('order');
-    }
-
-    public function getImagePathAttribute(): string
-    {
-        return self::UPLOAD_URL . $this->alias . '/';
-    }
-
     public function getImageSrcAttribute(): string
     {
         return self::UPLOAD_URL . $this->image;
     }
 
-    public function getIconSrcAttribute(): string
-    {
-        return self::UPLOAD_URL . $this->icon;
-    }
-
-    public function getCatalogImage()
-    {
-        if ($this->single_image()->count()) {
-            return $this->single_image->thumb(1);
-        } elseif ($this->image) {
-            return request()->getSchemeAndHttpHost() . $this->image_src;
-        } else {
-            return request()->getSchemeAndHttpHost() . self::NO_IMAGE;
-        }
-    }
-
-    public function getIsLandingAttribute(): bool
-    {
-        return in_array($this->alias, Page::$landing_aliases);
-    }
 }

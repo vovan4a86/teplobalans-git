@@ -3913,16 +3913,12 @@ burgerMenu();
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   changeCity: () => (/* binding */ changeCity),
-/* harmony export */   loadMoreNews: () => (/* binding */ loadMoreNews),
-/* harmony export */   loadMoreProducts: () => (/* binding */ loadMoreProducts),
-/* harmony export */   loadMoreProjects: () => (/* binding */ loadMoreProjects),
 /* harmony export */   resetForm: () => (/* binding */ resetForm),
 /* harmony export */   sendAjax: () => (/* binding */ sendAjax),
-/* harmony export */   sendConsultation: () => (/* binding */ sendConsultation),
-/* harmony export */   sendDrawingRequest: () => (/* binding */ sendDrawingRequest),
 /* harmony export */   sendFiles: () => (/* binding */ sendFiles),
-/* harmony export */   sendProductRequest: () => (/* binding */ sendProductRequest)
+/* harmony export */   sendProductRequest: () => (/* binding */ sendProductRequest),
+/* harmony export */   sendProject: () => (/* binding */ sendProject),
+/* harmony export */   sendVacancy: () => (/* binding */ sendVacancy)
 /* harmony export */ });
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);
@@ -3983,102 +3979,22 @@ var resetForm = function resetForm(form) {
   jquery__WEBPACK_IMPORTED_MODULE_0___default()(form).find('.invalid').attr('title', '').removeClass('invalid');
 };
 
-//чертеж
-var sendDrawingRequest = function sendDrawingRequest() {
-  jquery__WEBPACK_IMPORTED_MODULE_0___default()('#drawing').submit(function (e) {
-    e.preventDefault();
-    var form = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this);
-    var url = jquery__WEBPACK_IMPORTED_MODULE_0___default()(form).attr('action');
-    var file = jquery__WEBPACK_IMPORTED_MODULE_0___default()(form).find('input[name=file]');
-    var data = new FormData();
-    jquery__WEBPACK_IMPORTED_MODULE_0___default().each(jquery__WEBPACK_IMPORTED_MODULE_0___default()(form).serializeArray(), function (key, value) {
-      data.append(value.name, value.value);
-    });
-    data.append('file', file.prop('files')[0]);
-    sendFiles(url, data, function (json) {
-      if (json.success) {
-        file.value = null;
-        jquery__WEBPACK_IMPORTED_MODULE_0___default()('span.upload__name').text('Загрузить чертёж');
-        resetForm(form);
-        (0,_popups__WEBPACK_IMPORTED_MODULE_1__.showSuccessRequestDialog)({
-          'title': 'Ваша заявка отправлена!',
-          'text': 'Наши менеджеры свяжутся с Вами в ближайшее время.'
-        });
-        // form.find('.is-close-btn').click();
-      }
-
-      if (json.errors) {
-        (0,_popups__WEBPACK_IMPORTED_MODULE_1__.showSuccessRequestDialog)({
-          'title': 'Произошла ошибка!',
-          'text': 'Попробуйте еще раз или свяжитесь с нами другим способом.'
-        });
-        console.error(json.errors);
-      }
-    });
-  });
-};
-sendDrawingRequest();
-
-//консультация
-var sendConsultation = function sendConsultation() {
-  jquery__WEBPACK_IMPORTED_MODULE_0___default()('#consultation').submit(function (e) {
-    e.preventDefault();
-    var form = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this);
-    var url = jquery__WEBPACK_IMPORTED_MODULE_0___default()(form).attr('action');
-    var file = jquery__WEBPACK_IMPORTED_MODULE_0___default()(form).find('input[name=file]');
-    var data = new FormData();
-    jquery__WEBPACK_IMPORTED_MODULE_0___default().each(jquery__WEBPACK_IMPORTED_MODULE_0___default()(form).serializeArray(), function (key, value) {
-      data.append(value.name, value.value);
-    });
-    data.append('file', file.prop('files')[0]);
-    sendFiles(url, data, function (json) {
-      if (json.success) {
-        file.value = null;
-        jquery__WEBPACK_IMPORTED_MODULE_0___default()('span.upload__name').text('Загрузить чертёж');
-        resetForm(form);
-        (0,_popups__WEBPACK_IMPORTED_MODULE_1__.showSuccessRequestDialog)({
-          'title': 'Ваша заявка отправлена!',
-          'text': 'Наши менеджеры свяжутся с Вами в ближайшее время.'
-        });
-        // form.find('.is-close-btn').click();
-      }
-
-      if (json.errors) {
-        (0,_popups__WEBPACK_IMPORTED_MODULE_1__.showSuccessRequestDialog)({
-          'title': 'Произошла ошибка!',
-          'text': 'Попробуйте еще раз или свяжитесь с нами другим способом.'
-        });
-        console.error(json.errors);
-      }
-    });
-  });
-};
-sendConsultation();
-
-//отправить заявку
+//вопрос специалисту
 var sendProductRequest = function sendProductRequest() {
-  jquery__WEBPACK_IMPORTED_MODULE_0___default()('#product-request').submit(function (e) {
+  jquery__WEBPACK_IMPORTED_MODULE_0___default()('#request').submit(function (e) {
     e.preventDefault();
     var form = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this);
     var url = jquery__WEBPACK_IMPORTED_MODULE_0___default()(form).attr('action');
-    var file = jquery__WEBPACK_IMPORTED_MODULE_0___default()(form).find('input[name=file]');
-    var data = new FormData();
-    jquery__WEBPACK_IMPORTED_MODULE_0___default().each(jquery__WEBPACK_IMPORTED_MODULE_0___default()(form).serializeArray(), function (key, value) {
-      data.append(value.name, value.value);
-    });
-    data.append('file', file.prop('files')[0]);
-    sendFiles(url, data, function (json) {
+    var data = jquery__WEBPACK_IMPORTED_MODULE_0___default()(form).serialize();
+    sendAjax(url, data, function (json) {
       if (json.success) {
-        file.value = null;
-        jquery__WEBPACK_IMPORTED_MODULE_0___default()('span.upload__name').text('Загрузить чертёж');
         resetForm(form);
         (0,_popups__WEBPACK_IMPORTED_MODULE_1__.showSuccessRequestDialog)({
-          'title': 'Ваша заявка отправлена!',
-          'text': 'Наши менеджеры свяжутся с Вами в ближайшее время.'
+          'title': 'Ваше сообщение успешно отправлено!',
+          'text': 'Мы свяжемся с вами в ближайшее время!'
         });
-        // form.find('.is-close-btn').click();
+        jquery__WEBPACK_IMPORTED_MODULE_0___default()('.is-close-btn').click();
       }
-
       if (json.errors) {
         (0,_popups__WEBPACK_IMPORTED_MODULE_1__.showSuccessRequestDialog)({
           'title': 'Произошла ошибка!',
@@ -4091,90 +4007,71 @@ var sendProductRequest = function sendProductRequest() {
 };
 sendProductRequest();
 
-//загрузить еще новости
-var loadMoreNews = function loadMoreNews() {
-  jquery__WEBPACK_IMPORTED_MODULE_0___default()('.more-news').click(function () {
-    var btn = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this);
-    var news_list = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.s-newses__grid');
-    var url = jquery__WEBPACK_IMPORTED_MODULE_0___default()(btn).data('url');
-    jquery__WEBPACK_IMPORTED_MODULE_0___default()(btn).hide();
-    sendAjax(url, {}, function (json) {
-      if (json.items) {
-        jquery__WEBPACK_IMPORTED_MODULE_0___default()(news_list).append(json.items);
-      }
-      if (json.btn) {
-        jquery__WEBPACK_IMPORTED_MODULE_0___default()(btn).replaceWith(json.btn);
-        jquery__WEBPACK_IMPORTED_MODULE_0___default()(btn).show();
-        loadMoreNews();
-      }
-    });
-  });
-};
-loadMoreNews();
-
-//загрузить еще товары в каталоге
-var loadMoreProducts = function loadMoreProducts() {
-  jquery__WEBPACK_IMPORTED_MODULE_0___default()('.c-load').click(function () {
-    var btn = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this);
-    var products_grid = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.s-prods__grid');
-    var pagination = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.s-prods__pagination');
-    var url = jquery__WEBPACK_IMPORTED_MODULE_0___default()(btn).data('url');
-    jquery__WEBPACK_IMPORTED_MODULE_0___default()(btn).hide();
-    sendAjax(url, {}, function (json) {
-      if (json.items) {
-        jquery__WEBPACK_IMPORTED_MODULE_0___default()(products_grid).append(json.items);
-      }
-      if (json.btn) {
-        jquery__WEBPACK_IMPORTED_MODULE_0___default()(btn).replaceWith(json.btn);
-        jquery__WEBPACK_IMPORTED_MODULE_0___default()(btn).show();
-        loadMoreProducts();
-      }
-      jquery__WEBPACK_IMPORTED_MODULE_0___default()(pagination).replaceWith(json.paginate);
-    });
-  });
-};
-loadMoreProducts();
-
-//загрузить еще проекты
-var loadMoreProjects = function loadMoreProjects() {
-  jquery__WEBPACK_IMPORTED_MODULE_0___default()('.more-projects').click(function () {
-    var btn = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this);
-    var projects_list = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.projects__list');
-    var url = jquery__WEBPACK_IMPORTED_MODULE_0___default()(btn).data('url');
-    jquery__WEBPACK_IMPORTED_MODULE_0___default()(btn).hide();
-    sendAjax(url, {}, function (json) {
-      if (json.items) {
-        jquery__WEBPACK_IMPORTED_MODULE_0___default()(projects_list).append(json.items);
-      }
-      if (json.btn) {
-        jquery__WEBPACK_IMPORTED_MODULE_0___default()(btn).replaceWith(json.btn);
-        jquery__WEBPACK_IMPORTED_MODULE_0___default()(btn).show();
-        loadMoreProjects();
-      }
-    });
-  });
-};
-loadMoreProjects();
-
-//работа с городами
-var changeCity = function changeCity() {
-  jquery__WEBPACK_IMPORTED_MODULE_0___default()('.b-city__link').click(function (e) {
+//интересная вакансия
+var sendVacancy = function sendVacancy() {
+  jquery__WEBPACK_IMPORTED_MODULE_0___default()('#vacancy').submit(function (e) {
     e.preventDefault();
-    var url = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).data('ajax');
-    var currentUrl = jquery__WEBPACK_IMPORTED_MODULE_0___default()('input[name=current-url]').val();
-    sendAjax(url, {
-      currentUrl: currentUrl
-    }, function (json) {
-      if (json.success && !json.redirect) {
-        location.reload();
+    var form = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this);
+    var url = jquery__WEBPACK_IMPORTED_MODULE_0___default()(form).attr('action');
+    var file = jquery__WEBPACK_IMPORTED_MODULE_0___default()(form).find('input[name=file]');
+    var data = new FormData();
+    jquery__WEBPACK_IMPORTED_MODULE_0___default().each(jquery__WEBPACK_IMPORTED_MODULE_0___default()(form).serializeArray(), function (key, value) {
+      data.append(value.name, value.value);
+    });
+    data.append('file', file.prop('files')[0]);
+    sendFiles(url, data, function (json) {
+      if (json.success) {
+        resetForm(form);
+        (0,_popups__WEBPACK_IMPORTED_MODULE_1__.showSuccessRequestDialog)({
+          'title': 'Ваше сообщение успешно отправлено!',
+          'text': 'Мы свяжемся с вами в ближайшее время!'
+        });
+        jquery__WEBPACK_IMPORTED_MODULE_0___default()('.is-close-btn').click();
       }
-      if (json.success && json.redirect) {
-        location.href = json.redirect;
+      if (json.errors) {
+        (0,_popups__WEBPACK_IMPORTED_MODULE_1__.showSuccessRequestDialog)({
+          'title': 'Произошла ошибка!',
+          'text': 'Попробуйте еще раз или свяжитесь с нами другим способом.'
+        });
+        console.error(json.errors);
       }
     });
   });
 };
-changeCity();
+sendVacancy();
+
+//расскажите о проекте
+var sendProject = function sendProject() {
+  jquery__WEBPACK_IMPORTED_MODULE_0___default()('#project').submit(function (e) {
+    e.preventDefault();
+    var form = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this);
+    var url = jquery__WEBPACK_IMPORTED_MODULE_0___default()(form).attr('action');
+    var file = jquery__WEBPACK_IMPORTED_MODULE_0___default()(form).find('input[name=file]');
+    var data = new FormData();
+    jquery__WEBPACK_IMPORTED_MODULE_0___default().each(jquery__WEBPACK_IMPORTED_MODULE_0___default()(form).serializeArray(), function (key, value) {
+      data.append(value.name, value.value);
+    });
+    data.append('file', file.prop('files')[0]);
+    sendFiles(url, data, function (json) {
+      if (json.success) {
+        resetForm(form);
+        (0,_popups__WEBPACK_IMPORTED_MODULE_1__.showSuccessRequestDialog)({
+          'title': 'Ваше сообщение успешно отправлено!',
+          'text': 'Мы свяжемся с вами в ближайшее время!'
+        });
+        jquery__WEBPACK_IMPORTED_MODULE_0___default()('.is-close-btn').click();
+      }
+      if (json.errors) {
+        (0,_popups__WEBPACK_IMPORTED_MODULE_1__.showSuccessRequestDialog)({
+          'title': 'Произошла ошибка!',
+          'text': 'Попробуйте еще раз или свяжитесь с нами другим способом.'
+        });
+        console.error(json.errors);
+      }
+    });
+  });
+};
+sendProject();
 
 /***/ }),
 
@@ -4235,6 +4132,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+// import './sliders';
 
 
 

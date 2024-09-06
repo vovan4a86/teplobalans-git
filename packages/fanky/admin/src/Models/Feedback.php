@@ -52,17 +52,18 @@ class Feedback extends Model {
 	];
 
 	public static $types = array(
-        1 => 'Изготовление по вашим чертежам',
-        2 => 'Консультация',
-        3 => 'Заявка с сайта',
+        1 => 'Вопрос специалисту',
+        2 => 'Интересная вакансия?',
+        3 => 'Расскажите о проекте',
     );
 
     private static $fields = [
     	'name' => 'Имя',
     	'phone' => 'Телефон',
     	'email' => 'E-mail',
-    	'message' => 'Сообщение',
-    	'file' => 'Файл',
+    	'text' => 'Сообщение',
+    	'service' => 'Специалист',
+    	'job' => 'Вакансия'
     ];
 
     public function scopeNotRead($query)

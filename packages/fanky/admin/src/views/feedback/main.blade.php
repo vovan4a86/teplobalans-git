@@ -45,7 +45,6 @@
 								<td>{{ $item->created_at->format('d.m.Y - H:i') }}</td>
 								<td>{{ $item->type_name }}</td>
 								<td>{!! $item->data_info !!}</td>
-								<td>{{ $item->deleteDrawing() }}</td>
 								<td>
 									<a class="glyphicon glyphicon-trash" href="{{ route('admin.feedbacks.del', [$item->id]) }}" style="font-size:20px; color:red;" onclick="feedbackDel(this, event)"></a>
 								</td>

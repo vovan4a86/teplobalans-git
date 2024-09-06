@@ -32,7 +32,7 @@
 								<td width="100" style="text-align: center;">
 									@if($item->image) <img src="{{ $item->thumb(1) }}" alt="{{ $item->name }}" width="50"> @endif
 								</td>
-								<td>{{ $item->title }}</td>
+								<td>{{ $item->name }}</td>
 								<td>{{ $item->expirience }}</td>
 								<td>{{ $item->place == 'office' ? 'Офис' : 'Удаленная работа' }}</td>
 								<td>{{ $item->salary }}</td>
