@@ -348,3 +348,7 @@ table tbody.news-body td {
 @keyframes spinner {
   to { transform: rotate(360deg); }
 }
+
+.warning {
+  background-color: red;
+}

@@ -172,6 +172,10 @@ class PageController extends Controller
         $page->ogGenerate();
         $page->setSeo();
 
+        if (count(request()->query())) {
+            View::share('canonical', route('portfolio'));
+        }
+
         $gallery = Gallery::whereCode('portfolio')->first();
         $images = $gallery->items()->paginate(S::get('portfolio_per_page', 9));
 

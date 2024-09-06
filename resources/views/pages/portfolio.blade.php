@@ -9,7 +9,7 @@
             <div class="b-objects__list">
                 @foreach($images as $image)
                     <div class="card-obj">
-                        <a class="card-obj__view" href="{{ $image->image_src }}"
+                        <a class="card-obj__view" href="{{ $image->src }}"
                            data-fancybox="objects-gallery"
                            data-caption="{{ $image->data != null ? $image->data['text'] : '' }}"
                            title="{{ $image->data != null ? $image->data['text'] : '' }}">

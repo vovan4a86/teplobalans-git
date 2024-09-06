@@ -33,12 +33,12 @@
                                     class="fa fa-fw fa-sitemap" title="Обновить sitemap.xml"></i></a></li>
                     <li><a href="{{ route('admin.clear-cache') }}" title="Очистить кеш" onclick="siteClearCache(this, event)"><i
                                     class="fa fa-fw fa-refresh" title="Очистить кеш"></i></a></li>
-                    <li>
-                    <a href="{{ route('admin.update-search-index') }}"
-                       title="Обновить поисковый индекс" onclick="updateSearchIndex(this, event)">
-                        <i class="fa fa-fw search-index" title="Обновить поисковый индекс">S</i>
-                    </a>
-                    </li>
+{{--                    <li>--}}
+{{--                    <a href="{{ route('admin.update-search-index') }}"--}}
+{{--                       title="Обновить поисковый индекс" onclick="updateSearchIndex(this, event)">--}}
+{{--                        <i class="fa fa-fw search-index" title="Обновить поисковый индекс">S</i>--}}
+{{--                    </a>--}}
+{{--                    </li>--}}
                     <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <span class="hidden-xs">{{ Auth::user()->name }}</span>
