@@ -153,6 +153,36 @@ class PageController extends Controller
         ]);
     }
 
+    public function portfolio()
+    {
+        $page = Page::whereAlias('portfolio')->first();
+        if (!$page) {
+            abort(404, 'Страница не найдена');
+        }
+
+        $bread[] = [
+            'url'  => route('about'),
+            'name' => 'О компании'
+        ];
+
+        $bread[] = [
+            'url'  => route('portfolio'),
+            'name' => 'Наши объекты'
+        ];
+        $page->ogGenerate();
+        $page->setSeo();
+
+        $gallery = Gallery::whereCode('portfolio')->first();
+        $images = $gallery->items()->paginate(S::get('portfolio_per_page', 9));
+
+        return view('pages.portfolio', [
+            'bread' => $bread,
+            'h1' => $page->getH1(),
+            'page' => $page,
+            'images' => $images
+        ]);
+    }
+
     public function policy()
     {
         $page = Page::whereAlias('policy')->first();
@@ -186,53 +216,6 @@ class PageController extends Controller
             'text' => $page->text,
             'h1' => $page->getH1(),
             'bread' => $bread
-        ]);
-    }
-
-    public function search()
-    {
-        \View::share('canonical', route('search'));
-        $q = Request::get('q', '');
-
-        if (!$q) {
-            $items_ids = [];
-        } else {
-            $items_ids = SearchIndex::orWhere('name', 'LIKE', '%' . $q . '%')
-                ->orderByDesc('updated_at')
-                ->pluck('product_id')->all();
-        }
-        $items = Product::whereIn('id', $items_ids)
-            ->paginate(S::get('search_per_page', 12))
-            ->appends(['q' => $q]); //Добавить параметры в строку запроса можно через метод appends().
-
-        if (Request::ajax()) {
-            $view_items = [];
-            foreach ($items as $item) {
-                $view_items[] = view('catalog.product_item', [
-                    'item' => $item,
-                ])->render();
-            }
-
-            return response()->json([
-                'items' => $view_items,
-                'paginate' => view('paginations.with_pages', [
-                    'paginator' => $items
-                ])->render()
-            ]);
-        }
-
-        $bread = [
-            'name' => 'Поиск',
-            'url' => route('search')
-        ];
-        $title = 'Результат поиска «' . $q . '»';
-        $certificates = Certificate::orderBy('order')->get();
-
-        return view('search.index', [
-            'bread' => $bread,
-            'items' => $items,
-            'h1' => $title,
-            'certificates' => $certificates
         ]);
     }
 

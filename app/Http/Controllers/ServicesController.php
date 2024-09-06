@@ -60,14 +60,14 @@ class ServicesController extends Controller
 
         Auth::init();
         if (Auth::user() && Auth::user()->isAdmin) {
-            View::share('admin_edit_link', route('admin.catalog.edit', [$item->id]));
+            View::share('admin_edit_link', route('admin.catalog.catalogEdit', [$item->id]));
         }
 
         $item->setSeo();
         $item->ogGenerate();
 
         return view(
-            'news.item',
+            'services.item',
             [
                 'bread' => $bread,
                 'item' => $item,

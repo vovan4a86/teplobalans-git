@@ -4267,7 +4267,7 @@ var initMap = function initMap(id, lat, lon, zoom, text) {
         balloonContent: text
       }, {
         iconLayout: 'default#image',
-        iconImageHref: 'static/images/common/ico_pin.svg',
+        iconImageHref: '/static/images/common/ico_pin.svg',
         iconImageSize: [33, 34],
         iconImageOffset: [-16, -24]
       });

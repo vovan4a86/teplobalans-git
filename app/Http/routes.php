@@ -23,15 +23,15 @@ Route::group(
             ->where('alias', '([A-Za-z0-9\-\/_]+)');
 
         Route::any('about', ['as' => 'about', 'uses' => 'PageController@about']);
-        Route::any('about/contacts', ['as' => 'contacts', 'uses' => 'PageController@contacts']);
+        Route::any('contacts', ['as' => 'contacts', 'uses' => 'PageController@contacts']);
         Route::any('about/projects', ['as' => 'projects', 'uses' => 'ObjectsController@index']);
         Route::any('about/projects/{id}', ['as' => 'projects.item', 'uses' => 'ObjectsController@item']);
+        Route::any('about/portfolio', ['as' => 'portfolio', 'uses' => 'PageController@portfolio']);
+        Route::any('about/vacancies', ['as' => 'vacancies', 'uses' => 'VacanciesController@index']);
+        Route::any('about/vacancies/{id}', ['as' => 'vacancies.item', 'uses' => 'VacanciesController@item']);
 
         Route::any('price', ['as' => 'price', 'uses' => 'PageController@price']);
         Route::any('contacts', ['as' => 'contacts', 'uses' => 'PageController@contacts']);
-
-        Route::any('vacancies', ['as' => 'vacancies', 'uses' => 'VacanciesController@index']);
-        Route::any('vacancies/{id}', ['as' => 'vacancies.item', 'uses' => 'VacanciesController@item']);
 
         Route::any('policy', ['as' => 'policy', 'uses' => 'PageController@policy']);
         Route::any('agreement', ['as' => 'agreement', 'uses' => 'PageController@agreement']);

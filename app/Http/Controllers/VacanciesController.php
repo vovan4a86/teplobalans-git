@@ -15,6 +15,12 @@ class VacanciesController extends Controller {
 		$this->vacancies_page = Page::whereAlias('vacancies')
 			->get()
 			->first();
+
+        $this->bread[] = [
+            'url'  => route('about'),
+            'name' => 'О компании'
+        ];
+
 		$this->bread[] = [
 			'url'  => route('vacancies'),
 			'name' => $this->vacancies_page['name']
@@ -25,7 +31,10 @@ class VacanciesController extends Controller {
 		$page = $this->vacancies_page;
 		if (!$page)
 			abort(404, 'Страница не найдена');
+
 		$bread = $this->bread;
+        $page->ogGenerate();
+        $page->setSeo();
 
         $items = Vacancy::public()
             ->orderBy('order')

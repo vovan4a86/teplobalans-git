@@ -10,7 +10,7 @@
         </button>
         <div class="mob-nav__logo">
             <div class="logo">
-                <img class="logo__img" src="static/images/common/logo.svg" width="76" height="72" alt="Теплобаланс" />
+                <img class="logo__img" src="/static/images/common/logo.svg" width="76" height="72" alt="Теплобаланс" />
                 <span class="logo__label">ООО «Теплобаланс»</span>
             </div>
         </div>
