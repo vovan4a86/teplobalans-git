@@ -265,6 +265,9 @@ Route::group(['namespace' => 'Fanky\Admin\Controllers', 'prefix' => 'admin', 'as
 
         Route::post('delete/{id}', $controller . 'postDelete')
             ->name('.delete');
+
+        Route::post('delete-image/{id}', $controller . 'postDeleteImage')
+            ->name('.delImage');
     });
 
     Route::group(['as' => '.certificates', 'prefix' => 'certificates'], function () {

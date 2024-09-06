@@ -15,7 +15,7 @@
                     @if($img = $first['img'])
                         <picture>
                             <img class="articles__main-view" src="{{ S::fileSrc($img) }}"
-                                 width="660" height="390" alt=""/>
+                                 width="660" height="390" alt="{{ $first['title'] }}"/>
                         </picture>
                     @endif
                 </div>
@@ -171,7 +171,8 @@
     </section>
     @endif
     <!--section.s-photo.is-gray-->
-    <section class="s-photo is-gray splide" data-projects-slider="data-projects-slider">
+    @if(count($fotos))
+        <section class="s-photo is-gray splide" data-projects-slider="data-projects-slider">
         <div class="s-photo__container container">
             <div class="s-photo__heading">
                 <div class="title">Фото</div>
@@ -208,54 +209,24 @@
             </div>
             <div class="s-photo__track splide__track">
                 <ul class="s-photo__list list-reset splide__list">
-                    <li class="s-photo__slide splide__slide">
-                        <a class="s-photo__view" href="/static/images/common/photo-1.jpg" data-fancybox="gallery"
-                           data-caption="Наименование изображения" title="Наименование изображения">
-                            <img class="s-photo__img" src="/static/images/common/photo-1.jpg" width="600" height="500"
-                                 alt="Наименование изображения" loading="lazy"/>
-                        </a>
-                    </li>
-                    <li class="s-photo__slide splide__slide">
-                        <a class="s-photo__view" href="/static/images/common/photo-2.jpg" data-fancybox="gallery"
-                           data-caption="Наименование изображения" title="Наименование изображения">
-                            <img class="s-photo__img" src="/static/images/common/photo-2.jpg" width="600" height="500"
-                                 alt="Наименование изображения" loading="lazy"/>
-                        </a>
-                    </li>
-                    <li class="s-photo__slide splide__slide">
-                        <a class="s-photo__view" href="/static/images/common/photo-1.jpg" data-fancybox="gallery"
-                           data-caption="Наименование изображения" title="Наименование изображения">
-                            <img class="s-photo__img" src="/static/images/common/photo-1.jpg" width="600" height="500"
-                                 alt="Наименование изображения" loading="lazy"/>
-                        </a>
-                    </li>
-                    <li class="s-photo__slide splide__slide">
-                        <a class="s-photo__view" href="/static/images/common/photo-2.jpg" data-fancybox="gallery"
-                           data-caption="Наименование изображения" title="Наименование изображения">
-                            <img class="s-photo__img" src="/static/images/common/photo-2.jpg" width="600" height="500"
-                                 alt="Наименование изображения" loading="lazy"/>
-                        </a>
-                    </li>
-                    <li class="s-photo__slide splide__slide">
-                        <a class="s-photo__view" href="/static/images/common/photo-1.jpg" data-fancybox="gallery"
-                           data-caption="Наименование изображения" title="Наименование изображения">
-                            <img class="s-photo__img" src="/static/images/common/photo-1.jpg" width="600" height="500"
-                                 alt="Наименование изображения" loading="lazy"/>
-                        </a>
-                    </li>
-                    <li class="s-photo__slide splide__slide">
-                        <a class="s-photo__view" href="/static/images/common/photo-2.jpg" data-fancybox="gallery"
-                           data-caption="Наименование изображения" title="Наименование изображения">
-                            <img class="s-photo__img" src="/static/images/common/photo-2.jpg" width="600" height="500"
-                                 alt="Наименование изображения" loading="lazy"/>
-                        </a>
-                    </li>
+                    @foreach($fotos as $foto)
+                        <li class="s-photo__slide splide__slide">
+                            <a class="s-photo__view" href="{{ $foto->src }}" data-fancybox="gallery"
+                               data-caption="{{ $foto->data != null ? $foto->data['text'] : '' }}"
+                               title="{{ $foto->data != null ? $foto->data['text'] : '' }}">
+                                <img class="s-photo__img" src="{{ $foto->thumb(1) }}" width="600" height="500"
+                                     alt="{{ $foto->data != null ? $foto->data['text'] : '' }}" loading="lazy"/>
+                            </a>
+                        </li>
+                    @endforeach
                 </ul>
             </div>
         </div>
     </section>
+    @endif
     <!--section.s-sert-->
-    <section class="s-sert splide" data-sert-slider="data-sert-slider">
+    @if(count($licenses))
+        <section class="s-sert splide" data-sert-slider="data-sert-slider">
         <div class="s-sert__container container">
             <div class="s-sert__heading">
                 <div class="title">Лицензии и сертификаты</div>
@@ -292,56 +263,19 @@
             </div>
             <div class="s-sert__track splide__track">
                 <ul class="s-sert__list list-reset splide__list">
-                    <li class="s-sert__slide splide__slide">
-                        <a class="s-sert__view" href="/static/images/common/sert-example.jpg"
-                           data-fancybox="sert-gallery" data-caption="Наименование сертификата"
-                           title="Наименование сертификата">
-                            <img class="s-sert__img" src="/static/images/common/sert-example.jpg" width="268"
-                                 height="383" alt="Наименование сертификата" loading="lazy"/>
+                    @foreach($licenses as $item)
+                        <li class="s-sert__slide splide__slide">
+                        <a class="s-sert__view" href="{{ $item->src }}"
+                           data-fancybox="sert-gallery" data-caption="{{ $item->data != null ? $item->data['text'] : '' }}"
+                           title="{{ $item->data != null ? $item->data['text'] : '' }}">
+                            <img class="s-sert__img" src="{{ $item->thumb(1) }}" width="268"
+                                 height="383" alt="{{ $item->data != null ? $item->data['text'] : '' }}" loading="lazy"/>
                         </a>
                     </li>
-                    <li class="s-sert__slide splide__slide">
-                        <a class="s-sert__view" href="/static/images/common/sert-example.jpg"
-                           data-fancybox="sert-gallery" data-caption="Наименование сертификата"
-                           title="Наименование сертификата">
-                            <img class="s-sert__img" src="/static/images/common/sert-example.jpg" width="268"
-                                 height="383" alt="Наименование сертификата" loading="lazy"/>
-                        </a>
-                    </li>
-                    <li class="s-sert__slide splide__slide">
-                        <a class="s-sert__view" href="/static/images/common/sert-example.jpg"
-                           data-fancybox="sert-gallery" data-caption="Наименование сертификата"
-                           title="Наименование сертификата">
-                            <img class="s-sert__img" src="/static/images/common/sert-example.jpg" width="268"
-                                 height="383" alt="Наименование сертификата" loading="lazy"/>
-                        </a>
-                    </li>
-                    <li class="s-sert__slide splide__slide">
-                        <a class="s-sert__view" href="/static/images/common/sert-example.jpg"
-                           data-fancybox="sert-gallery" data-caption="Наименование сертификата"
-                           title="Наименование сертификата">
-                            <img class="s-sert__img" src="/static/images/common/sert-example.jpg" width="268"
-                                 height="383" alt="Наименование сертификата" loading="lazy"/>
-                        </a>
-                    </li>
-                    <li class="s-sert__slide splide__slide">
-                        <a class="s-sert__view" href="/static/images/common/sert-example.jpg"
-                           data-fancybox="sert-gallery" data-caption="Наименование сертификата"
-                           title="Наименование сертификата">
-                            <img class="s-sert__img" src="/static/images/common/sert-example.jpg" width="268"
-                                 height="383" alt="Наименование сертификата" loading="lazy"/>
-                        </a>
-                    </li>
-                    <li class="s-sert__slide splide__slide">
-                        <a class="s-sert__view" href="/static/images/common/sert-example.jpg"
-                           data-fancybox="sert-gallery" data-caption="Наименование сертификата"
-                           title="Наименование сертификата">
-                            <img class="s-sert__img" src="/static/images/common/sert-example.jpg" width="268"
-                                 height="383" alt="Наименование сертификата" loading="lazy"/>
-                        </a>
-                    </li>
+                    @endforeach
                 </ul>
             </div>
         </div>
     </section>
+    @endif
 @stop

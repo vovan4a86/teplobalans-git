@@ -34,14 +34,36 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Vacancy extends Model
 {
-    use HasH1;
+    use HasImage, HasH1;
 
     protected $table = 'vacancies';
 
     protected $guarded = ['id'];
 
+    const UPLOAD_URL = '/uploads/vacancies/';
+
+    public static $thumbs = [
+        1 => '100x100|fit', //admin
+        2 => '430x260|fit', //card
+    ];
+
     public function scopePublic($query)
     {
         return $query->where('published', 1);
     }
+
+    public function getImageSrcAttribute(): string {
+        return self::UPLOAD_URL . $this->image;
+    }
+
+    public function getUrlAttribute(): string
+    {
+        return route('vacancies.item', ['id' => $this->id]);
+    }
+
+    public function getAnnounce() {
+        return mb_strimwidth($this->announce, 0, 90, '...');
+    }
+
+
 }

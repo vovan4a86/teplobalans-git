@@ -1,7 +1,6 @@
 @extends('admin::template')
 
 @section('scripts')
-	<script src="http://code.jquery.com/ui/1.11.2/jquery-ui.min.js" type="text/javascript"></script>
 	<script type="text/javascript" src="/adminlte/interface_vacancies.js"></script>
 @stop
 
@@ -30,12 +29,14 @@
 									style="background: #ffcccc"
 								@endif>
 								<td width="40" style="cursor: pointer"><i class="fa fa-ellipsis-v"></i> <i class="fa fa-ellipsis-v"></i></td>
-								<td width="200">{{ $item->name }}</td>
-								<td width="200">{{ $item->schedule }}</td>
-								<td width="200">{{ $item->email }}</td>
-								<td width="200">{{ $item->phone }}</td>
-								<td width="200">{{ $item->salary }}</td>
-								<td>{!! mb_strimwidth($item->text, 0, 120, '...') !!}</td>
+								<td width="100" style="text-align: center;">
+									@if($item->image) <img src="{{ $item->thumb(1) }}" alt="{{ $item->name }}" width="50"> @endif
+								</td>
+								<td>{{ $item->title }}</td>
+								<td>{{ $item->expirience }}</td>
+								<td>{{ $item->place == 'office' ? 'Офис' : 'Удаленная работа' }}</td>
+								<td>{{ $item->salary }}</td>
+								<td>{!! mb_strimwidth($item->announce, 0, 120, '...') !!}</td>
 								<td width="60">
 									<a class="glyphicon glyphicon-edit" href="{{ route('admin.vacancies.edit', [$item->id]) }}"
 									   style="font-size:20px; color:orange;"></a>

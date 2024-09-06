@@ -29,12 +29,13 @@ class AdminVacanciesController extends AdminController {
 	public function postSave()
 	{
 		$id = Request::input('id');
-		$data = Request::only(['name', 'text', 'schedule', 'email', 'phone', 'salary', 'published', 'order']);
+		$data = Request::except(['id', 'image']);
+        $image = Request::file('image');
 
         if (!array_get($data, 'published')) $data['published'] = 0;
 
         $rules = [
-            'name' => 'required',
+            'title' => 'required',
         ];
 
 		// валидация данных
@@ -46,6 +47,12 @@ class AdminVacanciesController extends AdminController {
 			return ['errors' => $validator->messages()];
 		}
 
+        // Загружаем изображение
+        if ($image) {
+            $file_name = Vacancy::uploadImage($image);
+            $data['image'] = $file_name;
+        }
+
 		// сохраняем страницу
 		$vacancy = Vacancy::find($id);
 		if (!$vacancy) {
@@ -54,10 +61,13 @@ class AdminVacanciesController extends AdminController {
 
 			return ['redirect' => route('admin.vacancies.edit', [$vacancy->id])];
 		} else {
+            if ($vacancy->image && isset($data['image'])) {
+                $vacancy->deleteImage();
+            }
 			$vacancy->update($data);
 		}
 
-		return ['msg' => 'Изменения сохранены.'];
+		return ['success' => true, 'msg' => 'Изменения сохранены.'];
 	}
 
 	public function postReorder()
@@ -78,4 +88,14 @@ class AdminVacanciesController extends AdminController {
 
 		return ['success' => true];
 	}
+
+    public function postDeleteImage($id) {
+        $vacancy = Vacancy::find($id);
+        if(!$vacancy) return ['success' => false];
+
+        $vacancy->deleteImage();
+        $vacancy->update(['image' => null]);
+
+        return ['success' => true];
+    }
 }
