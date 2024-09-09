@@ -58,6 +58,7 @@
                     <button class="btn btn-sm" href="#" onclick="addRow(this, event)">Добавить</button>
                     <button class="btn btn-sm btn-success" type="submit">Сохранить</button>
                 </div>
+                <p style="font-style: italic; color: grey; font-size: 12px">После изменений следует очистить кэш сайта.</p>
             @else
                 <div>Необходимо выбрать раздел.</div>
             @endif

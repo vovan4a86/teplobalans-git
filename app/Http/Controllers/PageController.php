@@ -109,21 +109,26 @@ class PageController extends Controller
             //заголовок = name без цены
             foreach ($sections as $section) {
                 $new_section = '';
-                foreach ($section->items as $i => $elem) {
-                    if($elem->price == '') {
-                        $new_section = $elem->name;
+                if(count($section->items)) {
+                    foreach ($section->items as $i => $elem) {
+                        if($elem->price == '') {
+                            $new_section = $elem->name;
+                        }
+                        if($new_section !== $elem->name) {
+                            $all_tabs[$section->name][$new_section][] = [
+                                'name' => $elem->name,
+                                'price' => $elem->price
+                            ];
+                        }
                     }
-                    if($new_section !== $elem->name) {
-                        $all_tabs[$section->name][$new_section][] = [
-                            'name' => $elem->name,
-                            'price' => $elem->price
-                        ];
-                    }
+                } else {
+                    $all_tabs[$section->name] = [];
                 }
             }
-
             Cache::add('all_tabs', $all_tabs, now()->addMinutes(60));
         }
+
+//        dd($all_tabs);
 
         return view('pages.price', [
             'bread' => $bread,
